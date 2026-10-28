@@ -1,5 +1,246 @@
-const mpData = {
-         "Bhopal": {
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PMUMS_MP_SAHYOG - Complete Portal (Multi-URL)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 15px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        .main-container {
+            max-width: 1200px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .portal-title-box {
+            background: linear-gradient(135deg, #b71c1c, #d32f2f);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .portal-title-box h1 {
+            margin: 0;
+            font-size: 26px;
+            letter-spacing: 0.5px;
+        }
+        .portal-title-box p {
+            margin: 5px 0 0 0;
+            font-size: 14px;
+            color: #ffccbc;
+            font-weight: bold;
+        }
+        .sub-header {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f1f3f4;
+            padding: 10px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 1px solid #dcdcdc;
+            font-size: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .filters {
+            display: flex;
+            gap: 12px;
+            background-color: #fff;
+            padding: 10px 0;
+            margin-bottom: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: #b71c1c;
+        }
+        .filter-group select {
+            padding: 6px 12px;
+            border: 1px solid #b71c1c;
+            background-color: #fce4ec;
+            color: #b71c1c;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .filter-group select:disabled {
+            background-color: #e0e0e0;
+            border-color: #999;
+            color: #666;
+        }
+        .action-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .action-btn:hover {
+            background-color: #0d47a1;
+        }
+        .action-btn:disabled {
+            background-color: #90caf9;
+            cursor: not-allowed;
+        }
+        .pdf-btn { background-color: #c62828; }
+        .pdf-btn:hover { background-color: #b71c1c; }
+        .csv-btn { background-color: #2e7d32; }
+        .csv-btn:hover { background-color: #1b5e20; }
+        .instructions {
+            background-color: #fff9c4;
+            padding: 10px;
+            border: 1px solid #fbc02d;
+            font-size: 13px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .total-reg-bar {
+            background-color: #1565c0;
+            color: white;
+            padding: 10px 15px;
+            font-weight: bold;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0px;
+            border-radius: 4px 4px 0 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            font-size: 12px;
+        }
+        th, td {
+            border: 1px solid #b0bec5;
+            padding: 6px 8px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        th {
+            background-color: #1565c0;
+            color: white;
+        }
+        .text-left {
+            text-align: left;
+            white-space: normal;
+        }
+        @media print {
+            .filters, .instructions, .action-btn { display: none !important; }
+            body { background-color: #fff; margin: 0; }
+            .main-container { box-shadow: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="portal-title-box">
+        <h1>PMUMS शिक्षक संघ, मप्र</h1>
+        <p>माह: नवंबर 2026 &nbsp;&nbsp;|&nbsp;&nbsp; सहयोग क्रमांक 10 (Multi-Source Data)</p>
+    </div>
+
+    <div class="sub-header">
+        <div>संभाग: <strong id="displayDivision">Gwalior</strong></div>
+        <div>जिला: <strong id="displayDistrict">Shivpuri</strong></div>
+        <div>ब्लॉक: <strong id="displayBlock">Badarwas</strong></div>
+        <div>Donor & Non Donor List</div>
+    </div>
+
+    <div class="instructions">
+        <strong>निर्देश:</strong> अपने संभाग, जिला, ब्लॉक का चयन करें और दोनों स्रोतों से डेटा एक साथ देखने के लिए **डेटा देखें** बटन पर क्लिक करें।
+    </div>
+
+    <div class="filters">
+        <div class="filter-group">
+            <label for="divisionSelect">संभाग चुनें ⏩</label>
+            <select id="divisionSelect" onchange="loadDistricts()">
+                <option value="">-- संभाग चुनें --</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="districtSelect">जिला चुनें ⏩</label>
+            <select id="districtSelect" onchange="loadBlocks(); updateHeaderInfo();" disabled>
+                <option value="">-- पहले संभाग चुनें --</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="blockSelect">ब्लॉक चुनें ⏩</label>
+            <select id="blockSelect" onchange="updateHeaderInfo(); toggleButtons();" disabled>
+                <option value="">-- पहले जिला चुनें --</option>
+            </select>
+        </div>
+        <div>
+            <button id="submitBtn" class="action-btn" onclick="fetchDataFromMultipleSources()" disabled>डेटा देखें</button>
+        </div>
+        <div>
+            <button id="pdfBtn" class="action-btn pdf-btn" onclick="window.print()" disabled>🖨️ प्रिंट / PDF</button>
+        </div>
+        <div>
+            <button id="csvBtn" class="action-btn csv-btn" onclick="downloadCSV()" disabled>📊 CSV डाउनलोड</button>
+        </div>
+    </div>
+
+    <div class="total-reg-bar">
+        <span>Total Registration</span>
+        <span id="totalCountDisplay">0</span>
+    </div>
+
+    <table id="summaryTable" style="margin-top: 0; display: none;">
+        <thead>
+            <tr>
+                <th>BLOCK</th>
+                <th>NON_DONOR</th>
+                <th>कुल सहयोग</th>
+            </tr>
+        </thead>
+        <tbody id="summaryTableBody"></tbody>
+    </table>
+
+    <div style="margin: 15px 0; font-weight: bold; color: #b71c1c;">विस्तृत सूची (Detailed List):</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 5%;">S.No.</th>
+                <th style="width: 12%;">Registration No.</th>
+                <th class="text-left" style="width: 18%;">Name</th>
+                <th style="width: 10%;">Division</th>
+                <th style="width: 10%;">District</th>
+                <th style="width: 10%;">Block</th>
+                <th class="text-left" style="width: 20%;">School</th>
+                <th style="width: 15%; white-space: nowrap;">असहयोग/सहयोग</th>
+            </tr>
+        </thead>
+        <tbody id="dataTableBody">
+            <tr>
+                <td colspan="8">कृपया विकल्प चुनकर 'डेटा देखें' बटन पर क्लिक करें...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const mpData = {
+        "Bhopal": {
             "Bhopal": ["Berasia", "Phanda Gramin", "Phanda URBAN- New City", "Phanda URBAN- Old City"],
             "Raisen": ["Badi", "Begamganj", "Gairatganj", "Obedullaganj", "Sanchi", "Silwani", "Udaipura"],
             "Rajgarh": ["Biaora", "Khilchipur", "Narsinghgarh", "Rajgarh", "Sarangpur", "Zirapur"],
@@ -75,3 +316,272 @@ const mpData = {
             "Ujjain": ["Badnagar", "Ghattia", "Khachrod", "Mahidpur", "Tarana", "Ujjain Rural", "Ujjain URBUN"]
         }
     };
+
+    let currentFilteredData = []; 
+
+    window.onload = function() {
+        const divisionSelect = document.getElementById("divisionSelect");
+        for (let division in mpData) {
+            let option = document.createElement("option");
+            option.value = division;
+            option.textContent = division;
+            divisionSelect.appendChild(option);
+        }
+    };
+
+    function loadDistricts() {
+        const selectedDivision = document.getElementById("divisionSelect").value;
+        const districtSelect = document.getElementById("districtSelect");
+        const blockSelect = document.getElementById("blockSelect");
+
+        districtSelect.innerHTML = '<option value="">-- जिला चुनें --</option>';
+        blockSelect.innerHTML = '<option value="">-- पहले जिला चुनें --</option>';
+        districtSelect.disabled = true;
+        blockSelect.disabled = true;
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById("pdfBtn").disabled = true;
+        document.getElementById("csvBtn").disabled = true;
+        document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("summaryTable").style.display = "none";
+
+        if (selectedDivision) {
+            districtSelect.disabled = false;
+            let districts = mpData[selectedDivision];
+            for (let district in districts) {
+                let option = document.createElement("option");
+                option.value = district;
+                option.textContent = district;
+                districtSelect.appendChild(option);
+            }
+        }
+        updateHeaderInfo();
+    }
+
+    function loadBlocks() {
+        const selectedDivision = document.getElementById("divisionSelect").value;
+        const selectedDistrict = document.getElementById("districtSelect").value;
+        const blockSelect = document.getElementById("blockSelect");
+
+        blockSelect.innerHTML = '<option value="">-- ब्लॉक चुनें --</option>';
+        blockSelect.disabled = true;
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById("pdfBtn").disabled = true;
+        document.getElementById("csvBtn").disabled = true;
+        document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("summaryTable").style.display = "none";
+
+        if (selectedDistrict) {
+            blockSelect.disabled = false;
+
+            let allOption = document.createElement("option");
+            allOption.value = "All Block";
+            allOption.textContent = "All Block";
+            blockSelect.appendChild(allOption);
+
+            let blocks = mpData[selectedDivision][selectedDistrict];
+            if (blocks) {
+                blocks.forEach(block => {
+                    let option = document.createElement("option");
+                    option.value = block;
+                    option.textContent = block;
+                    blockSelect.appendChild(option);
+                });
+            }
+        }
+        updateHeaderInfo();
+    }
+
+    function toggleButtons() {
+        const blockVal = document.getElementById("blockSelect").value;
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.disabled = !(blockVal && blockVal !== "");
+    }
+
+    function updateHeaderInfo() {
+        const divVal = document.getElementById("divisionSelect").value;
+        const distVal = document.getElementById("districtSelect").value;
+        const blockVal = document.getElementById("blockSelect").value;
+
+        document.getElementById("displayDivision").textContent = divVal || "---";
+        document.getElementById("displayDistrict").textContent = distVal || "---";
+        document.getElementById("displayBlock").textContent = blockVal || "---";
+        toggleButtons();
+    }
+
+    // दोनों यूआरएल से डेटा एक साथ लाने का फंक्शन
+    async function fetchDataFromMultipleSources() {
+        const selectedDistrict = document.getElementById("districtSelect").value;
+        const selectedBlock = document.getElementById("blockSelect").value;
+        const tableBody = document.getElementById("dataTableBody");
+        const pdfBtn = document.getElementById("pdfBtn");
+        const csvBtn = document.getElementById("csvBtn");
+        const totalCountDisplay = document.getElementById("totalCountDisplay");
+
+        if (!selectedBlock) return;
+
+        tableBody.innerHTML = `<tr><td colspan="8">दोनों स्रोतों से डेटा लोड हो रहा है... कृपया प्रतीक्षा करें...</td></tr>`;
+        pdfBtn.disabled = true;
+        csvBtn.disabled = true;
+        totalCountDisplay.textContent = "0";
+        document.getElementById("summaryTable").style.display = "none";
+
+        const url1 = "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec";
+        const url2 = "https://script.google.com/macros/s/AKfycbzsa2KMFIcEALPqJTePS5e1UDLmtLagiNHBwylbs64lM2_In1t1blzd8rW6OKamtxg/exec";
+
+        try {
+            let responses = await Promise.all([
+                fetch(url1).then(res => res.json()).catch(() => []),
+                fetch(url2).then(res => res.json()).catch(() => [])
+            ]);
+
+            let combinedData = [...responses[0], ...responses[1]];
+
+            tableBody.innerHTML = "";
+
+            let districtFiltered = combinedData.filter(row => 
+                row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
+            );
+
+            generateBlockSummary(districtFiltered);
+
+            let filtered = [];
+            if (selectedBlock === "All Block") {
+                filtered = districtFiltered;
+            } else {
+                filtered = districtFiltered.filter(row => 
+                    row[7] && row[7].toString().trim().toLowerCase() === selectedBlock.trim().toLowerCase()
+                );
+            }
+
+            filtered.sort((a, b) => {
+                let blockA = (a[7] || "").toString().trim().toLowerCase();
+                let blockB = (b[7] || "").toString().trim().toLowerCase();
+                if (blockA !== blockB) {
+                    return blockA.localeCompare(blockB, 'hi');
+                }
+                let nameA = (a[2] || "").toString().trim().toLowerCase();
+                let nameB = (b[2] || "").toString().trim().toLowerCase();
+                return nameA.localeCompare(nameB, 'hi');
+            });
+
+            currentFilteredData = [...filtered];
+            totalCountDisplay.textContent = districtFiltered.length;
+
+            if (!currentFilteredData || currentFilteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="8">इस चयन के लिए कोई डेटा उपलब्ध नहीं है</td></tr>`;
+                return;
+            }
+
+            currentFilteredData.forEach((row, index) => {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${row[1] || ''}</td>
+                    <td class="text-left">${row[2] || ''}</td>
+                    <td>${row[5] || ''}</td>
+                    <td>${row[6] || ''}</td>
+                    <td>${row[7] || ''}</td>
+                    <td class="text-left">${row[8] || ''}</td>
+                    <td style="white-space: nowrap;">${row[9] || ''}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            pdfBtn.disabled = false;
+            csvBtn.disabled = false;
+
+        } catch (error) {
+            console.error("Error fetching data from multiple sources:", error);
+            tableBody.innerHTML = `<tr><td colspan="8">डेटा लोड करने में त्रुटि हुई। कृपया नेटवर्क या यूआरएल जांचें।</td></tr>`;
+        }
+    }
+
+    function generateBlockSummary(districtData) {
+        const summaryTableBody = document.getElementById("summaryTableBody");
+        summaryTableBody.innerHTML = "";
+
+        let blockMap = {};
+
+        districtData.forEach(row => {
+            let block = row[7] || "Other";
+            let status = (row[9] || "").toString().trim();
+
+            if (!blockMap[block]) {
+                blockMap[block] = { non_donor: 0, total_sahyog: 0 };
+            }
+
+            if (status.toUpperCase() === "NON_DONOR") {
+                blockMap[block].non_donor++;
+            } else if (status !== "") {
+                blockMap[block].total_sahyog++;
+            }
+        });
+
+        let sortedBlocks = Object.keys(blockMap).sort();
+        let grandNonDonor = 0;
+        let grandSahyog = 0;
+
+        sortedBlocks.forEach(block => {
+            let nd = blockMap[block].non_donor;
+            let ts = blockMap[block].total_sahyog;
+
+            grandNonDonor += nd;
+            grandSahyog += ts;
+
+            let tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td class="text-left"><strong>${block}</strong></td>
+                <td>${nd}</td>
+                <td><strong>${ts}</strong></td>
+            `;
+            summaryTableBody.appendChild(tr);
+        });
+
+        let totalTr = document.createElement("tr");
+        totalTr.style.fontWeight = "bold";
+        totalTr.style.backgroundColor = "#f1f3f4";
+        totalTr.innerHTML = `
+            <td class="text-left">Total</td>
+            <td>${grandNonDonor}</td>
+            <td>${grandSahyog}</td>
+        `;
+        summaryTableBody.appendChild(totalTr);
+
+        document.getElementById("summaryTable").style.display = "table";
+    }
+
+    function downloadCSV() {
+        if (!currentFilteredData || currentFilteredData.length === 0) return;
+
+        let csvRows = [];
+        let headers = ["S.No.", "Registration No.", "Name", "Division", "District", "Block", "School", "Sahyog Status"];
+        csvRows.push(headers.join(","));
+
+        currentFilteredData.forEach((row, index) => {
+            let dataRow = [
+                index + 1,
+                `"${row[1] || ''}"`,
+                `"${row[2] || ''}"`,
+                `"${row[5] || ''}"`,
+                `"${row[6] || ''}"`,
+                `"${row[7] || ''}"`,
+                `"${row[8] || ''}"`,
+                `"${row[9] || ''}"`
+            ];
+            csvRows.push(dataRow.join(","));
+        });
+
+        let csvString = csvRows.join("\n");
+        let blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `PMUMS_Report_${document.getElementById("displayBlock").textContent}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+
+</body>
+</html>
