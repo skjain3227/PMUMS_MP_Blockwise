@@ -146,6 +146,12 @@
             text-align: left;
             white-space: normal;
         }
+        /* विस्तृत सूची के लिए नॉन-डोनर डेटा का हल्का लाल रंग */
+        .light-red {
+            background-color: #ffebee !important;
+            color: #c62828 !important;
+            font-weight: bold;
+        }
         @media print {
             .filters, .instructions, .action-btn { display: none !important; }
             body { background-color: #fff; margin: 0; }
@@ -213,7 +219,7 @@
     </div>
 
    <div class="total-reg-bar">
-    <span>Total Registration</span>
+    <span>Total Registration (District)</span>
     <span id="totalCountDisplay">0</span>
 </div>
 
@@ -487,7 +493,15 @@
             }
 
             currentFilteredData.forEach((row, index) => {
+                let statusVal = (row[9] || "").toString().trim();
+                let isNonDonor = statusVal.toUpperCase() === "NON_DONOR";
+                let rowClass = isNonDonor ? "light-red" : "";
+
                 let tr = document.createElement("tr");
+                if (isNonDonor) {
+                    tr.className = "light-red";
+                }
+
                 tr.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${row[1] || ''}</td>
@@ -496,7 +510,7 @@
                     <td>${row[6] || ''}</td>
                     <td>${row[7] || ''}</td>
                     <td class="text-left">${row[8] || ''}</td>
-                    <td style="white-space: nowrap;">${row[9] || ''}</td>
+                    <td class="${rowClass}" style="white-space: nowrap;">${statusVal}</td>
                 `;
                 tableBody.appendChild(tr);
             });
