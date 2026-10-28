@@ -547,7 +547,11 @@
             }
         });
 
-        let sortedBlocks = Object.keys(blockMap).sort();
+        // DONOR (total_sahyog) के अनुसार Descending Order (ज़्यादा से कम) में सॉर्ट करें
+        let sortedBlocks = Object.keys(blockMap).sort((a, b) => {
+            return blockMap[b].total_sahyog - blockMap[a].total_sahyog;
+        });
+
         let grandNonDonor = 0;
         let grandSahyog = 0;
         let grandTotalReg = 0;
