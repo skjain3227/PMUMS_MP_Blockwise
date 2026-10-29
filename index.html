@@ -112,17 +112,18 @@
             border-radius: 4px;
         }
         .total-reg-bar {
-            background-color: #1565c0;
-            color: white;
-            padding: 10px 15px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            background-color: #fff9c4;
+            color: #333333;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border: 1px solid #ffe082;
             font-weight: bold;
             font-size: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0px;
-            border-radius: 4px 4px 0 0;
-            max-width: 25%;
         }
         table {
             width: 100%;
@@ -146,7 +147,6 @@
             text-align: left;
             white-space: normal;
         }
-        /* विस्तृत सूची के लिए नॉन-डोनर डेटा का हल्का लाल रंग */
         .light-red {
             background-color: #ffebee !important;
             color: #c62828 !important;
@@ -174,18 +174,18 @@
         <h1>PMUMS शिक्षक संघ, मप्र</h1>
         <p>माह: नवंबर 2026 &nbsp;&nbsp;|&nbsp;&nbsp; सहयोग क्रमांक 10 (Multi-Source Data)</p>
     </div>
-<p style="text-align: center; font-size: 14px; color: #1565c0; font-weight: bold; line-height: 1.3;">
-    शिक्षकों का संगठन - शिक्षकों के लिए - शिक्षकों द्वारा
-</p>
+    <p style="text-align: center; font-size: 14px; color: #1565c0; font-weight: bold; line-height: 1.3;">
+        शिक्षकों का संगठन - शिक्षकों के लिए - शिक्षकों द्वारा
+    </p>
     <div class="sub-header">
-        <div>संभाग: <strong id="displayDivision">Gwalior</strong></div>
-        <div>जिला: <strong id="displayDistrict">Shivpuri</strong></div>
-        <div>ब्लॉक: <strong id="displayBlock">Badarwas</strong></div>
+        <div>संभाग: <strong id="displayDivision">---</strong></div>
+        <div>जिला: <strong id="displayDistrict">---</strong></div>
+        <div>ब्लॉक: <strong id="displayBlock">---</strong></div>
         <div>Donor & Non Donor List</div>
     </div>
 
     <div class="instructions">
-        <strong>निर्देश:</strong> अपने संभाग, जिला, ब्लॉक का चयन करें और दोनों स्रोतों से डेटा एक साथ देखने के लिए **डेटा देखें** बटन पर क्लिक करें।
+        <strong>निर्देश:</strong> अपने संभाग, जिला, ब्लॉक का चयन करें और दोनों स्रोतों से डेटा एक साथ देखने के लिए **SUBMIT** बटन पर क्लिक करें।
     </div>
 
     <div class="filters">
@@ -208,7 +208,9 @@
             </select>
         </div>
         <div>
-            <button id="submitBtn" class="action-btn" onclick="fetchDataFromMultipleSources()" disabled>डेटा देखें</button>
+            <button id="submitBtn" class="action-btn" onclick="fetchDataFromMultipleSources()" disabled>
+                SUBMIT
+            </button>
         </div>
         <div>
             <button id="pdfBtn" class="action-btn pdf-btn" onclick="window.print()" disabled>🖨️ प्रिंट / PDF</button>
@@ -218,23 +220,33 @@
         </div>
     </div>
 
-   <div class="total-reg-bar">
-    <span>Total Registration (District)</span>
-    <span id="totalCountDisplay">0</span>
-</div>
+    <div class="total-reg-bar">
+        <div>
+            <span>Total Registration (District):</span>
+            <span id="totalCountDisplay">0</span>
+        </div>
+        <div>
+            <span>Total Donor (MP):</span>
+            <span id="totalDonorMPDisplay">0</span>
+        </div>
+        <div>
+            <span>Total Non-Donor (MP):</span>
+            <span id="totalNonDonorMPDisplay">0</span>
+        </div>
+    </div>
 
-<!-- सारांश तालिका (Summary Table) -->
-<table id="summaryTable" style="margin-top: 0; display: none; margin-left: auto; margin-right: auto;">
-    <thead>
-        <tr>
-            <th>BLOCK</th>
-            <th>NON_DONOR</th>
-            <th>DONOR</th>
-            <th>Total Registration</th>
-        </tr>
-    </thead>
-    <tbody id="summaryTableBody"></tbody>
-</table>
+    <!-- सारांश तालिका (Summary Table) -->
+    <table id="summaryTable" style="margin-top: 0; display: none; margin-left: auto; margin-right: auto;">
+        <thead>
+            <tr>
+                <th>BLOCK</th>
+                <th>NON_DONOR</th>
+                <th>DONOR</th>
+                <th>Total Registration</th>
+            </tr>
+        </thead>
+        <tbody id="summaryTableBody"></tbody>
+    </table>
 
     <div style="margin: 15px 0; font-weight: bold; color: #b71c1c;">विस्तृत सूची (Detailed List):</div>
 
@@ -253,7 +265,7 @@
         </thead>
         <tbody id="dataTableBody">
             <tr>
-                <td colspan="8">कृपया विकल्प चुनकर 'डेटा देखें' बटन पर क्लिक करें...</td>
+                <td colspan="8">कृपया विकल्प चुनकर 'SUBMIT' बटन पर क्लिक करें...</td>
             </tr>
         </tbody>
     </table>
@@ -363,6 +375,8 @@
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
         document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("totalDonorMPDisplay").textContent = "0";
+        document.getElementById("totalNonDonorMPDisplay").textContent = "0";
         document.getElementById("summaryTable").style.display = "none";
 
         if (selectedDivision) {
@@ -389,6 +403,8 @@
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
         document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("totalDonorMPDisplay").textContent = "0";
+        document.getElementById("totalNonDonorMPDisplay").textContent = "0";
         document.getElementById("summaryTable").style.display = "none";
 
         if (selectedDistrict) {
@@ -436,6 +452,8 @@
         const pdfBtn = document.getElementById("pdfBtn");
         const csvBtn = document.getElementById("csvBtn");
         const totalCountDisplay = document.getElementById("totalCountDisplay");
+        const totalDonorDisplay = document.getElementById("totalDonorMPDisplay");
+        const totalNonDonorDisplay = document.getElementById("totalNonDonorMPDisplay");
 
         if (!selectedBlock) return;
 
@@ -443,6 +461,8 @@
         pdfBtn.disabled = true;
         csvBtn.disabled = true;
         totalCountDisplay.textContent = "0";
+        totalDonorDisplay.textContent = "0";
+        totalNonDonorDisplay.textContent = "0";
         document.getElementById("summaryTable").style.display = "none";
 
         const url1 = "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec";
@@ -454,15 +474,39 @@
                 fetch(url2).then(res => res.json()).catch(() => [])
             ]);
 
-            let combinedData = [...responses[0], ...responses[1]];
+            let dataUrl1 = responses[0]; // URL 1 (Donor Source)
+            let dataUrl2 = responses[1]; // URL 2 (Non-Donor Source)
 
-            tableBody.innerHTML = "";
-
-            let districtFiltered = combinedData.filter(row => 
+            // जिले के अनुसार डेटा फ़िल्टर करना
+            let districtFilteredUrl1 = dataUrl1.filter(row => 
                 row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
             );
 
-            generateBlockSummary(districtFiltered);
+            let districtFilteredUrl2 = dataUrl2.filter(row => 
+                row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
+            );
+
+            // कुल Donor और Non-Donor की जिला-स्तर की गिनती
+            let totalDonorCount = districtFilteredUrl1.filter(row => {
+                let status = (row[9] || "").toString().trim().toUpperCase();
+                return status !== "" && status !== "NON_DONOR";
+            }).length;
+
+            let totalNonDonorCount = districtFilteredUrl2.filter(row => {
+                let status = (row[9] || "").toString().trim().toUpperCase();
+                return status === "NON_DONOR";
+            }).length;
+
+            totalDonorDisplay.textContent = totalDonorCount;
+            totalNonDonorDisplay.textContent = totalNonDonorCount;
+
+            // अलग-अलग URLs से ब्लॉक-वाइज समरी जनरेट करना
+            generateBlockSummaryFromSeparateSources(districtFilteredUrl1, districtFilteredUrl2);
+
+            let combinedData = [...dataUrl1, ...dataUrl2];
+            let districtFiltered = combinedData.filter(row => 
+                row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
+            );
 
             let filtered = [];
             if (selectedBlock === "All Block") {
@@ -487,6 +531,7 @@
             currentFilteredData = [...filtered];
             totalCountDisplay.textContent = districtFiltered.length;
 
+            tableBody.innerHTML = "";
             if (!currentFilteredData || currentFilteredData.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="8">इस चयन के लिए कोई डेटा उपलब्ध नहीं है</td></tr>`;
                 return;
@@ -524,30 +569,42 @@
         }
     }
 
-    function generateBlockSummary(districtData) {
+    function generateBlockSummaryFromSeparateSources(donorData, nonDonorData) {
         const summaryTableBody = document.getElementById("summaryTableBody");
         summaryTableBody.innerHTML = "";
 
         let blockMap = {};
 
-        districtData.forEach(row => {
+        // 1. URL 1 से ब्लॉक-वाइज Donor गिनना
+        donorData.forEach(row => {
             let block = row[7] || "Other";
-            let status = (row[9] || "").toString().trim();
+            let status = (row[9] || "").toString().trim().toUpperCase();
 
             if (!blockMap[block]) {
                 blockMap[block] = { non_donor: 0, total_sahyog: 0, total_reg: 0 };
             }
 
-            blockMap[block].total_reg++;
-
-            if (status.toUpperCase() === "NON_DONOR") {
-                blockMap[block].non_donor++;
-            } else if (status !== "") {
+            if (status !== "" && status !== "NON_DONOR") {
                 blockMap[block].total_sahyog++;
+                blockMap[block].total_reg++;
             }
         });
 
-        // DONOR (total_sahyog) के अनुसार Descending Order (ज़्यादा से कम) में सॉर्ट करें
+        // 2. URL 2 से ब्लॉक-वाइज Non-Donor गिनना
+        nonDonorData.forEach(row => {
+            let block = row[7] || "Other";
+            let status = (row[9] || "").toString().trim().toUpperCase();
+
+            if (!blockMap[block]) {
+                blockMap[block] = { non_donor: 0, total_sahyog: 0, total_reg: 0 };
+            }
+
+            if (status === "NON_DONOR") {
+                blockMap[block].non_donor++;
+                blockMap[block].total_reg++;
+            }
+        });
+
         let sortedBlocks = Object.keys(blockMap).sort((a, b) => {
             return blockMap[b].total_sahyog - blockMap[a].total_sahyog;
         });
@@ -575,7 +632,6 @@
             summaryTableBody.appendChild(tr);
         });
 
-        // Total Row - नीले रंग (Blue) और सफेद टेक्स्ट के साथ
         let totalTr = document.createElement("tr");
         totalTr.style.fontWeight = "bold";
         totalTr.style.backgroundColor = "#1565c0"; 
