@@ -125,6 +125,11 @@
             font-weight: bold;
             font-size: 15px;
         }
+        .mp-bar {
+            background-color: #e3f2fd;
+            border-color: #90caf9;
+            color: #0d47a1;
+        }
         table {
             width: 100%;
             margin-left: auto;
@@ -220,10 +225,11 @@
         </div>
     </div>
 
-    <div class="total-reg-bar">
+    <!-- म.प्र. स्तर (बिना फ़िल्टर के कुल आंकड़े) -->
+    <div class="total-reg-bar mp-bar">
         <div>
-            <span>Total Registration (District):</span>
-            <span id="totalCountDisplay">0</span>
+            <span>Total Registration (MP):</span>
+            <span id="totalRegMPDisplay">0</span>
         </div>
         <div>
             <span>Total Donor (MP):</span>
@@ -232,6 +238,22 @@
         <div>
             <span>Total Non-Donor (MP):</span>
             <span id="totalNonDonorMPDisplay">0</span>
+        </div>
+    </div>
+
+    <!-- जिला स्तर (फ़िल्टर अनुसार आंकड़े) -->
+    <div class="total-reg-bar">
+        <div>
+            <span>Total Registration (District):</span>
+            <span id="totalCountDisplay">0</span>
+        </div>
+        <div>
+            <span>Total Donor (District):</span>
+            <span id="totalDonorDistrictDisplay">0</span>
+        </div>
+        <div>
+            <span>Total Non-Donor (District):</span>
+            <span id="totalNonDonorDistrictDisplay">0</span>
         </div>
     </div>
 
@@ -374,9 +396,12 @@
         document.getElementById("submitBtn").disabled = true;
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
-        document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("totalRegMPDisplay").textContent = "0";
         document.getElementById("totalDonorMPDisplay").textContent = "0";
         document.getElementById("totalNonDonorMPDisplay").textContent = "0";
+        document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("totalDonorDistrictDisplay").textContent = "0";
+        document.getElementById("totalNonDonorDistrictDisplay").textContent = "0";
         document.getElementById("summaryTable").style.display = "none";
 
         if (selectedDivision) {
@@ -402,9 +427,12 @@
         document.getElementById("submitBtn").disabled = true;
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
-        document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("totalRegMPDisplay").textContent = "0";
         document.getElementById("totalDonorMPDisplay").textContent = "0";
         document.getElementById("totalNonDonorMPDisplay").textContent = "0";
+        document.getElementById("totalCountDisplay").textContent = "0";
+        document.getElementById("totalDonorDistrictDisplay").textContent = "0";
+        document.getElementById("totalNonDonorDistrictDisplay").textContent = "0";
         document.getElementById("summaryTable").style.display = "none";
 
         if (selectedDistrict) {
@@ -451,18 +479,24 @@
         const tableBody = document.getElementById("dataTableBody");
         const pdfBtn = document.getElementById("pdfBtn");
         const csvBtn = document.getElementById("csvBtn");
+        const totalRegMPDisplay = document.getElementById("totalRegMPDisplay");
+        const totalDonorMPDisplay = document.getElementById("totalDonorMPDisplay");
+        const totalNonDonorMPDisplay = document.getElementById("totalNonDonorMPDisplay");
         const totalCountDisplay = document.getElementById("totalCountDisplay");
-        const totalDonorDisplay = document.getElementById("totalDonorMPDisplay");
-        const totalNonDonorDisplay = document.getElementById("totalNonDonorMPDisplay");
+        const totalDonorDistrictDisplay = document.getElementById("totalDonorDistrictDisplay");
+        const totalNonDonorDistrictDisplay = document.getElementById("totalNonDonorDistrictDisplay");
 
         if (!selectedBlock) return;
 
         tableBody.innerHTML = `<tr><td colspan="8">दोनों स्रोतों से डेटा लोड हो रहा है... कृपया प्रतीक्षा करें...</td></tr>`;
         pdfBtn.disabled = true;
         csvBtn.disabled = true;
+        totalRegMPDisplay.textContent = "0";
+        totalDonorMPDisplay.textContent = "0";
+        totalNonDonorMPDisplay.textContent = "0";
         totalCountDisplay.textContent = "0";
-        totalDonorDisplay.textContent = "0";
-        totalNonDonorDisplay.textContent = "0";
+        totalDonorDistrictDisplay.textContent = "0";
+        totalNonDonorDistrictDisplay.textContent = "0";
         document.getElementById("summaryTable").style.display = "none";
 
         const url1 = "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec";
@@ -477,7 +511,30 @@
             let dataUrl1 = responses[0]; // URL 1 (Donor Source)
             let dataUrl2 = responses[1]; // URL 2 (Non-Donor Source)
 
-            // जिले के अनुसार डेटा फ़िल्टर करना
+            // 1. समग्र म.प्र. (बिना फ़िल्टर) कुल Donor, Non-Donor एवं Registration की गिनती
+            let allDonorCount = dataUrl1.filter(row => {
+                if (!row || !row[1]) return false;
+                let regVal = row[1].toString().trim().toLowerCase();
+                if (regVal === "" || regVal.includes("reg")) return false;
+                let status = (row[9] || "").toString().trim().toUpperCase();
+                return status !== "" && status !== "NON_DONOR";
+            }).length;
+
+            let allNonDonorCount = dataUrl2.filter(row => {
+                if (!row || !row[1]) return false;
+                let regVal = row[1].toString().trim().toLowerCase();
+                if (regVal === "" || regVal.includes("reg")) return false;
+                let status = (row[9] || "").toString().trim().toUpperCase();
+                return status === "NON_DONOR";
+            }).length;
+
+            let allTotalRegCount = allDonorCount + allNonDonorCount;
+
+            totalRegMPDisplay.textContent = allTotalRegCount;
+            totalDonorMPDisplay.textContent = allDonorCount;
+            totalNonDonorMPDisplay.textContent = allNonDonorCount;
+
+            // 2. जिले के अनुसार डेटा फ़िल्टर करना
             let districtFilteredUrl1 = dataUrl1.filter(row => 
                 row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
             );
@@ -497,8 +554,8 @@
                 return status === "NON_DONOR";
             }).length;
 
-            totalDonorDisplay.textContent = totalDonorCount;
-            totalNonDonorDisplay.textContent = totalNonDonorCount;
+            totalDonorDistrictDisplay.textContent = totalDonorCount;
+            totalNonDonorDistrictDisplay.textContent = totalNonDonorCount;
 
             // अलग-अलग URLs से ब्लॉक-वाइज समरी जनरेट करना
             generateBlockSummaryFromSeparateSources(districtFilteredUrl1, districtFilteredUrl2);
