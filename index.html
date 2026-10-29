@@ -1,425 +1,1720 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="hi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PMUMS_MP_SAHYOG - Complete Portal (Multi-URL)</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <meta name="theme-color" content="#b91c1c" />
+    <title>PMUMS शिक्षक संघ, म.प्र. - सहयोग एवं असहयोग पोर्टल</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --primary: #b91c1c;
+        --primary-dark: #991b1b;
+        --secondary: #1e40af;
+        --secondary-dark: #1e3a8a;
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --bg-page: #f8fafc;
+        --bg-card: #ffffff;
+        --border-color: #e2e8f0;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 3px 5px -1px rgba(0, 0, 0, 0.06);
+        --radius-sm: 4px;
+        --radius-md: 6px;
+        --radius-lg: 8px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family:
+          "Plus Jakarta Sans",
+          "Noto Sans Devanagari",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        background-color: var(--bg-page);
+        color: var(--text-main);
+        line-height: 1.35;
+        padding: 8px 6px;
+      }
+
+      .main-container {
+        max-width: 1240px;
+        margin: 0 auto;
+        background: var(--bg-card);
+        padding: 10px 12px;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid var(--border-color);
+      }
+
+      /* Header / Banner with Logo */
+      .portal-header {
+        background: linear-gradient(
+          135deg,
+          #991b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        );
+        color: white;
+        padding: 10px 14px;
+        border-radius: var(--radius-md);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 10px -2px rgba(185, 28, 28, 0.25);
+        margin-bottom: 6px;
+      }
+      .portal-header-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        text-align: center;
+      }
+      .portal-logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        background: white;
+        flex-shrink: 0;
+      }
+      .portal-header-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .portal-header h1 {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        margin-bottom: 2px;
+        line-height: 1.2;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .header-meta {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 2px;
+      }
+      .meta-pill {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(4px);
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .portal-motto {
+        text-align: center;
+        font-size: 12px;
+        color: #ffcdd2;
+        font-weight: 700;
+        margin-top: 4px;
+        letter-spacing: 0.2px;
+      }
+
+      /* Filters Card - Ultra Compact */
+      .filters-card {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 8px 10px;
+        margin-bottom: 6px;
+        box-shadow: var(--shadow-sm);
+      }
+      .filter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 8px;
+        align-items: end;
+      }
+      .filter-group {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .filter-group label {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: #334155;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .filter-select {
+        width: 100%;
+        padding: 6px 8px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1e293b;
+        background-color: #fff;
+        border: 1px solid #cbd5e1;
+        border-radius: var(--radius-sm);
+        outline: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .filter-select:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+      }
+      .filter-select:disabled {
+        background-color: #f1f5f9;
+        color: #94a3b8;
+        border-color: #e2e8f0;
+        cursor: not-allowed;
+      }
+
+      .action-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+        padding-top: 6px;
+        border-top: 1px solid #f1f5f9;
+      }
+      .action-sub-row {
+        display: flex;
+        gap: 6px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 6px 12px;
+        font-size: 12.5px;
+        font-weight: 700;
+        border-radius: var(--radius-sm);
+        border: none;
+        cursor: pointer;
+        transition: all 0.15s ease;
+        font-family: inherit;
+        box-shadow: var(--shadow-sm);
+        min-height: 32px;
+      }
+      .btn:hover:not(:disabled) {
+        transform: translateY(-1px);
+      }
+      .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        color: white;
+      }
+      .btn-danger {
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        color: white;
+      }
+      .btn-success {
+        background: linear-gradient(135deg, #059669, #10b981);
+        color: white;
+      }
+
+      /* Instruction Card - Ultra Compact */
+      .instruction-card {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: #fefce8;
+        border-radius: var(--radius-sm);
+        font-size: 11.5px;
+        color: #854d0e;
+        margin-top: 6px;
+        padding: 4px 8px;
+        border: 1px solid #fef08a;
+      }
+
+      /* Metrics Section - Ultra Compact Unified Bar */
+      .district-metrics-compact {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 6px 8px;
+        margin-bottom: 6px;
+        box-shadow: var(--shadow-sm);
+      }
+      .compact-metric-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+      }
+      .compact-metric-title {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #334155;
+      }
+      .section-badge {
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 9999px;
+        text-transform: uppercase;
+      }
+      .badge-mp {
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #bfdbfe;
+      }
+      .badge-district {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+      }
+
+      .compact-metric-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+      }
+      .compact-metric-pill {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        min-height: 28px;
+        transition: all 0.15s ease;
+      }
+      .compact-metric-pill:hover {
+        transform: translateY(-1px);
+      }
+      .pill-left {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        min-width: 0;
+      }
+      .pill-icon {
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      .pill-label {
+        font-size: 10px;
+        font-weight: 700;
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .pill-value {
+        font-size: 14.5px;
+        font-weight: 800;
+        color: #0f172a;
+        white-space: nowrap;
+        margin-left: 6px;
+      }
+
+      /* Color variations for pills */
+      .card-mp-reg {
+        border-color: #bfdbfe;
+        background: linear-gradient(135deg, #ffffff 60%, #eff6ff 100%);
+      }
+      .card-mp-reg .pill-value {
+        color: #1d4ed8;
+      }
+
+      .card-mp-donor {
+        border-color: #bbf7d0;
+        background: linear-gradient(135deg, #ffffff 60%, #f0fdf4 100%);
+      }
+      .card-mp-donor .pill-value {
+        color: #15803d;
+      }
+
+      .card-mp-nondonor {
+        border-color: #fecaca;
+        background: linear-gradient(135deg, #ffffff 60%, #fff1f2 100%);
+      }
+      .card-mp-nondonor .pill-value {
+        color: #b91c1c;
+      }
+
+      .card-dist-reg {
+        border-color: #fde68a;
+        background: linear-gradient(135deg, #ffffff 60%, #fefce8 100%);
+      }
+      .card-dist-reg .pill-value {
+        color: #b45309;
+      }
+
+      .card-dist-donor {
+        border-color: #99f6e4;
+        background: linear-gradient(135deg, #ffffff 60%, #f0fdfa 100%);
+      }
+      .card-dist-donor .pill-value {
+        color: #0f766e;
+      }
+
+      .card-dist-nondonor {
+        border-color: #fbcfe8;
+        background: linear-gradient(135deg, #ffffff 60%, #fdf2f8 100%);
+      }
+      .card-dist-nondonor .pill-value {
+        color: #be185d;
+      }
+
+      /* Table Card & Modern Tables - Ultra Compact */
+      .table-card {
+        background: white;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 6px;
+      }
+      .table-header-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 8px;
+        background: #ffffff;
+        border-bottom: 1px solid var(--border-color);
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .table-title-area {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .table-title {
+        font-size: 13.5px;
+        font-weight: 800;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .count-pill {
+        font-size: 11px;
+        font-weight: 700;
+        background: #f1f5f9;
+        color: #475569;
+        padding: 1px 6px;
+        border-radius: 9999px;
+        border: 1px solid #cbd5e1;
+      }
+
+      /* View Mode Toggle Buttons */
+      .view-toggle-group {
+        display: inline-flex;
+        background: #f1f5f9;
+        padding: 2px;
+        border-radius: var(--radius-sm);
+        border: 1px solid #cbd5e1;
+        gap: 2px;
+      }
+      .view-btn {
+        border: none;
+        background: transparent;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 11.5px;
+        font-weight: 700;
+        color: #475569;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+      .view-btn.active {
+        background: white;
+        color: #1e40af;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Live Search Box */
+      .search-box-container {
+        position: relative;
+        min-width: 190px;
+        max-width: 300px;
+        flex: 1;
+      }
+      .search-input {
+        width: 100%;
+        padding: 5px 8px 5px 28px;
+        font-size: 12.5px;
+        font-family: inherit;
+        border: 1px solid #cbd5e1;
+        border-radius: var(--radius-sm);
+        outline: none;
+        transition: all 0.2s ease;
+      }
+      .search-input:focus {
+        border-color: var(--secondary);
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+      }
+      .search-icon {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: #94a3b8;
+        pointer-events: none;
+      }
+
+      /* Mobile Scroll Hint */
+      .mobile-scroll-hint {
+        display: none;
+        background: #eff6ff;
+        color: #1d4ed8;
+        font-size: 10.5px;
+        font-weight: 600;
+        text-align: center;
+        padding: 3px 6px;
+        border-bottom: 1px solid #bfdbfe;
+      }
+
+      .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 12px;
+      }
+      th {
+        background: #1e3a8a;
+        color: #ffffff;
+        font-weight: 700;
+        padding: 6px 6px;
+        text-align: center;
+        border: none;
+        white-space: nowrap;
+        letter-spacing: 0.2px;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+      td {
+        padding: 5px 6px;
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+        text-align: center;
+        white-space: nowrap;
+        transition: background-color 0.1s;
+      }
+      tbody tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      tbody tr:hover {
+        background-color: #f1f5f9;
+      }
+      .text-left {
+        text-align: left !important;
+        white-space: normal !important;
+      }
+
+      /* Status Badges */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        padding: 2px 6px;
+        border-radius: 9999px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1px;
+        white-space: nowrap;
+      }
+      .badge-donor {
+        background-color: #dcfce7;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+      .badge-non-donor {
+        background-color: #fee2e2;
+        color: #b91c1c;
+        border: 1px solid #fecaca;
+      }
+      tr.row-non-donor {
+        background-color: #fff1f2 !important;
+      }
+      tr.row-non-donor:hover {
+        background-color: #ffe4e6 !important;
+      }
+
+      /* Mobile Card Grid */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 5px;
+        padding: 6px;
+        background: #f8fafc;
+      }
+      .member-card {
+        background: #ffffff;
+        border-radius: var(--radius-sm);
+        padding: 6px 8px;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        position: relative;
+      }
+      .member-card-donor {
+        border-left: 3px solid #10b981;
+      }
+      .member-card-non-donor {
+        border-left: 3px solid #ef4444;
+        background: #fffafa;
+      }
+      .m-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px;
+      }
+      .m-index-reg {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        color: #475569;
+      }
+      .m-reg-badge {
+        font-family: monospace;
+        background: #eff6ff;
+        color: #1d4ed8;
+        padding: 1px 6px;
+        border-radius: 3px;
+        border: 1px solid #bfdbfe;
+        font-size: 11.5px;
+      }
+      .m-name {
+        font-size: 13.5px;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+      .m-school {
+        font-size: 11.5px;
+        color: #475569;
+        display: flex;
+        align-items: flex-start;
+        gap: 4px;
+        line-height: 1.2;
+      }
+      .m-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 2px;
+        padding-top: 3px;
+        border-top: 1px dashed #e2e8f0;
+        font-size: 10.5px;
+      }
+      .m-tag {
+        background: #f1f5f9;
+        color: #334155;
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-weight: 600;
+      }
+
+      /* Summary Table Styling */
+      #summaryTable th {
+        background: #0f172a;
+      }
+      #summaryTable th,
+      #summaryTable td {
+        padding: 4px 6px;
+        font-size: 11.5px;
+      }
+      .total-row {
+        background: #1e40af !important;
+        color: white !important;
+        font-weight: 800 !important;
+      }
+      .total-row td {
+        color: white !important;
+        border-bottom: none !important;
+      }
+
+      /* Empty / Loading State */
+      .empty-state {
+        padding: 24px 14px !important;
+        text-align: center !important;
+        color: var(--text-muted);
+      }
+      .empty-icon {
+        font-size: 26px;
+        margin-bottom: 6px;
+      }
+      .loader-spinner {
+        width: 28px;
+        height: 28px;
+        border: 3px solid #e2e8f0;
+        border-top-color: #2563eb;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        margin: 8px auto;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Floating Scroll to Top Button (FAB) - Compact */
+      .scroll-top-btn {
+        position: fixed;
+        bottom: 14px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #1e40af;
+        color: white;
+        border: none;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transform: scale(0.8);
+        transition: all 0.2s ease;
+      }
+      .scroll-top-btn.visible {
+        opacity: 1;
+        visibility: visible;
+        transform: scale(1);
+      }
+      .scroll-top-btn:hover {
+        background: #1d4ed8;
+        transform: scale(1.05);
+      }
+
+      /* Footer - Ultra Compact */
+      .portal-footer {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 11.5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+      .creator-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: #fff;
+        border: 1px solid #fee2e2;
+        color: #b91c1c;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-size: 11.5px;
+        font-weight: 600;
+        box-shadow: var(--shadow-sm);
+        text-align: center;
+      }
+
+      /* ========================================================
+           RESPONSIVE DESIGN (MOBILE & TABLET - ZERO WASTED SPACE)
+           ======================================================== */
+
+      @media (max-width: 768px) {
         body {
-            font-family: Arial, sans-serif;
-            margin: 15px;
-            color: #333;
-            background-color: #f9f9f9;
+          padding: 4px 3px;
         }
         .main-container {
-            max-width: 1200px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+          padding: 6px 5px;
+          border-radius: var(--radius-sm);
         }
-        .portal-title-box {
-            background: linear-gradient(135deg, #b71c1c, #d32f2f);
-            color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .portal-header {
+          padding: 8px 10px;
+          margin-bottom: 4px;
         }
-        .portal-title-box h1 {
-            margin: 0;
-            font-size: 26px;
-            letter-spacing: 0.5px;
+        .portal-header-content {
+          gap: 8px;
         }
-        .portal-title-box p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
-            color: #ffccbc;
-            font-weight: bold;
+        .portal-logo {
+          width: 48px;
+          height: 48px;
         }
-        .sub-header {
-            display: flex;
-            justify-content: space-around;
-            background-color: #f1f3f4;
-            padding: 10px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border: 1px solid #dcdcdc;
-            font-size: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+        .portal-header h1 {
+          font-size: 16.5px;
         }
-        .filters {
-            display: flex;
-            gap: 12px;
-            background-color: #fff;
-            padding: 10px 0;
-            margin-bottom: 15px;
-            align-items: center;
-            flex-wrap: wrap;
+        .meta-pill {
+          font-size: 10px;
+          padding: 1px 6px;
         }
-        .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            color: #b71c1c;
+        .portal-motto {
+          font-size: 11px;
+          margin-top: 2px;
         }
-        .filter-group select {
-            padding: 6px 12px;
-            border: 1px solid #b71c1c;
-            background-color: #fce4ec;
-            color: #b71c1c;
-            font-weight: bold;
-            border-radius: 4px;
-            font-size: 14px;
+
+        .filters-card {
+          padding: 6px 8px;
+          margin-bottom: 4px;
         }
-        .filter-group select:disabled {
-            background-color: #e0e0e0;
-            border-color: #999;
-            color: #666;
+        .filter-grid {
+          grid-template-columns: 1fr;
+          gap: 6px;
         }
-        .action-btn {
-            background-color: #1565c0;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            font-size: 13px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.2s;
+        .filter-select {
+          font-size: 16px !important; /* Prevents auto-zoom in mobile Safari */
+          padding: 7px 8px;
         }
-        .action-btn:hover {
-            background-color: #0d47a1;
+        .action-row {
+          flex-direction: column;
+          gap: 5px;
+          margin-top: 4px;
+          padding-top: 4px;
         }
-        .action-btn:disabled {
-            background-color: #90caf9;
-            cursor: not-allowed;
+        .btn {
+          width: 100%;
+          padding: 8px 10px;
+          font-size: 13.5px;
+          min-height: 36px;
         }
-        .pdf-btn { background-color: #c62828; }
-        .pdf-btn:hover { background-color: #b71c1c; }
-        .csv-btn { background-color: #2e7d32; }
-        .csv-btn:hover { background-color: #1b5e20; }
-        .instructions {
-            background-color: #fff9c4;
-            padding: 10px;
-            border: 1px solid #fbc02d;
-            font-size: 13px;
-            margin-bottom: 15px;
-            border-radius: 4px;
+        .action-sub-row {
+          display: flex;
+          width: 100%;
+          gap: 5px;
         }
-        .total-reg-bar {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            background-color: #fff9c4;
-            color: #333333;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            border: 1px solid #ffe082;
-            font-weight: bold;
-            font-size: 15px;
+        .action-sub-row .btn {
+          flex: 1;
         }
-        .mp-bar {
-            background-color: #e3f2fd;
-            border-color: #90caf9;
-            color: #0d47a1;
+
+        .district-metrics-compact {
+          padding: 4px 6px;
+          margin-bottom: 4px;
         }
-        table {
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            border-collapse: collapse;
-            margin-bottom: 25px;
-            font-size: 12px;
+        .compact-metric-header {
+          margin-bottom: 3px;
         }
-        th, td {
-            border: 1px solid #b0bec5;
-            padding: 6px 8px;
-            text-align: center;
-            white-space: nowrap;
+        .compact-metric-title {
+          font-size: 11px;
         }
-        th {
-            background-color: #1565c0;
-            color: white;
+        .compact-metric-grid {
+          gap: 3px;
         }
-        .text-left {
-            text-align: left;
-            white-space: normal;
+        .compact-metric-pill {
+          padding: 3px 4px;
+          min-height: 26px;
+          gap: 2px;
         }
-        .light-red {
-            background-color: #ffebee !important;
-            color: #c62828 !important;
-            font-weight: bold;
+        .pill-icon {
+          font-size: 12px;
         }
-        @media print {
-            .filters, .instructions, .action-btn { display: none !important; }
-            body { background-color: #fff; margin: 0; }
-            .main-container { box-shadow: none; padding: 0; }
+        .pill-label {
+          font-size: 8.5px;
+          letter-spacing: 0;
         }
+        .pill-value {
+          font-size: 12.5px;
+          margin-left: 2px;
+        }
+
+        .table-header-bar {
+          padding: 6px;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 6px;
+        }
+        .table-title-area {
+          justify-content: space-between;
+          width: 100%;
+        }
+        .search-box-container {
+          max-width: 100%;
+          min-width: 100%;
+        }
+        .search-input {
+          font-size: 16px !important;
+          padding: 6px 8px 6px 26px;
+        }
+
+        .mobile-scroll-hint {
+          display: block;
+        }
+
+        th,
+        td {
+          padding: 4px 4px;
+          font-size: 11px;
+        }
+        #summaryTable th,
+        #summaryTable td {
+          padding: 4px 3px;
+          font-size: 11px;
+        }
+
+        .cards-grid {
+          grid-template-columns: 1fr;
+          padding: 4px;
+          gap: 4px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .compact-metric-pill {
+          padding: 3px 2px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          min-height: auto;
+          gap: 1px;
+        }
+        .pill-left {
+          flex-direction: column;
+          align-items: center;
+          gap: 1px;
+        }
+        .pill-icon {
+          font-size: 11px;
+        }
+        .pill-label {
+          font-size: 8px;
+          line-height: 1;
+        }
+        .pill-value {
+          font-size: 11.5px;
+          margin-left: 0;
+          line-height: 1.1;
+        }
+        .portal-header h1 {
+          font-size: 15px;
+        }
+        .portal-logo {
+          width: 48px;
+          height: 48px;
+        }
+      }
+
+      /* Print Media */
+      @media print {
+        body {
+          background: white !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          font-size: 10px;
+        }
+        .main-container {
+          max-width: 100% !important;
+          box-shadow: none !important;
+          border: none !important;
+          padding: 0 !important;
+        }
+        .filters-card,
+        .instruction-card,
+        .search-box-container,
+        .portal-footer,
+        .action-row,
+        .view-toggle-group,
+        .mobile-scroll-hint,
+        .scroll-top-btn {
+          display: none !important;
+        }
+        .portal-header {
+          padding: 6px !important;
+          box-shadow: none !important;
+        }
+        .portal-header h1 {
+          font-size: 16px !important;
+        }
+        .portal-logo {
+          width: 64px !important;
+          height: 64px !important;
+        }
+        #tableWrapper {
+          display: block !important;
+        }
+        #cardsContainer {
+          display: none !important;
+        }
+        th,
+        td {
+          padding: 3px 4px !important;
+          font-size: 9.5px !important;
+        }
+      }
     </style>
-</head>
-<body>
-<p style="text-align: center; font-size: 12px; color: red; line-height: 1.2; animation: blinker 1.5s linear infinite;">
-    Made by - Sanjay Jain, Distt. IT Cell head, Shivpuri (MP)
-</p>
+  </head>
+  <body>
+    <!-- Floating Scroll to Top FAB -->
+    <button
+      id="scrollToTopBtn"
+      class="scroll-top-btn"
+      onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      title="ऊपर जाएँ"
+    >
+      ▲
+    </button>
 
-<style>
-@keyframes blinker {
-    50% { opacity: 0; }
-}
-</style>
-<div class="main-container">
-    <div class="portal-title-box">
-        <h1>PMUMS शिक्षक संघ, मप्र</h1>
-        <p>माह: नवंबर 2026 &nbsp;&nbsp;|&nbsp;&nbsp; सहयोग क्रमांक 10 (Multi-Source Data)</p>
-    </div>
-    <p style="text-align: center; font-size: 14px; color: #1565c0; font-weight: bold; line-height: 1.3;">
-        शिक्षकों का संगठन - शिक्षकों के लिए - शिक्षकों द्वारा
-    </p>
-    <div class="sub-header">
-        <div>संभाग: <strong id="displayDivision">---</strong></div>
-        <div>जिला: <strong id="displayDistrict">---</strong></div>
-        <div>ब्लॉक: <strong id="displayBlock">---</strong></div>
-        <div>Donor & Non Donor List</div>
-    </div>
+    <div class="main-container">
+      <!-- Header Banner with Logo -->
+      <header class="portal-header">
+        <div class="portal-header-content">
+          <img src="logo.png" alt="PMUMS Logo" class="portal-logo" />
+          <div class="portal-header-text">
+            <h1>PMUMS शिक्षक संघ, मध्य प्रदेश</h1>
+            <div class="header-meta">
+              <span class="meta-pill">📅 माह: नवंबर 2026</span>
+              <span class="meta-pill">🤝 सहयोग क्रमांक 10</span>
+              <span class="meta-pill">🌐 Multi-Source Portal</span>
+            </div>
+            <div class="portal-motto">
+              ✨ शिक्षकों का संगठन — शिक्षकों के लिए — शिक्षकों द्वारा ✨
+            </div>
+          </div>
+        </div>
+      </header>
 
-    <div class="instructions">
-        <strong>निर्देश:</strong> अपने संभाग, जिला, ब्लॉक का चयन करें और दोनों स्रोतों से डेटा एक साथ देखने के लिए **SUBMIT** बटन पर क्लिक करें।
-    </div>
+      <!-- Filters Section -->
+      <div class="filters-card">
+        <div class="filter-grid">
+          <div class="filter-group">
+            <label for="divisionSelect"><span>🏛️</span> संभाग चुनें</label>
+            <select
+              id="divisionSelect"
+              class="filter-select"
+              onchange="loadDistricts()"
+            >
+              <option value="">-- संभाग चुनें --</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="districtSelect"><span>📍</span> जिला चुनें</label>
+            <select
+              id="districtSelect"
+              class="filter-select"
+              onchange="
+                loadBlocks();
+                updateHeaderInfo();
+              "
+              disabled
+            >
+              <option value="">-- पहले संभाग चुनें --</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="blockSelect"><span>🏢</span> ब्लॉक चुनें</label>
+            <select
+              id="blockSelect"
+              class="filter-select"
+              onchange="
+                updateHeaderInfo();
+                toggleButtons();
+              "
+              disabled
+            >
+              <option value="">-- पहले जिला चुनें --</option>
+            </select>
+          </div>
+        </div>
 
-    <div class="filters">
-        <div class="filter-group">
-            <label for="divisionSelect">संभाग चुनें ⏩</label>
-            <select id="divisionSelect" onchange="loadDistricts()">
-                <option value="">-- संभाग चुनें --</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="districtSelect">जिला चुनें ⏩</label>
-            <select id="districtSelect" onchange="loadBlocks(); updateHeaderInfo();" disabled>
-                <option value="">-- पहले संभाग चुनें --</option>
-            </select>
-        </div>
-        <div class="filter-group">
-            <label for="blockSelect">ब्लॉक चुनें ⏩</label>
-            <select id="blockSelect" onchange="updateHeaderInfo(); toggleButtons();" disabled>
-                <option value="">-- पहले जिला चुनें --</option>
-            </select>
-        </div>
-        <div>
-            <button id="submitBtn" class="action-btn" onclick="fetchDataFromMultipleSources()" disabled>
-                SUBMIT
+        <div class="action-row">
+          <button
+            id="submitBtn"
+            class="btn btn-primary"
+            onclick="fetchDataFromMultipleSources()"
+            disabled
+          >
+            <span>🔍</span> डेटा देखें (SUBMIT)
+          </button>
+          <div class="action-sub-row">
+            <button
+              id="pdfBtn"
+              class="btn btn-danger"
+              onclick="window.print()"
+              disabled
+            >
+              <span>🖨️</span> प्रिंट / PDF
             </button>
+            <button
+              id="csvBtn"
+              class="btn btn-success"
+              onclick="downloadCSV()"
+              disabled
+            >
+              <span>📊</span> CSV डाउनलोड
+            </button>
+          </div>
         </div>
-        <div>
-            <button id="pdfBtn" class="action-btn pdf-btn" onclick="window.print()" disabled>🖨️ प्रिंट / PDF</button>
+
+        <div class="instruction-card">
+          <span style="font-size: 15px">💡</span>
+          <div>
+            <strong>निर्देश:</strong> संभाग, जिला एवं ब्लॉक चुनें और डेटा लोड
+            करने हेतु <strong>'डेटा देखें (SUBMIT)'</strong> पर क्लिक करें।
+          </div>
         </div>
-        <div>
-            <button id="csvBtn" class="action-btn csv-btn" onclick="downloadCSV()" disabled>📊 CSV डाउनलोड</button>
+      </div>
+
+      <!-- Metrics Section (State & District - Unified Compact Bar) -->
+      <section class="district-metrics-compact">
+        <!-- 1. State Level Metrics (Without Filter) -->
+        <div class="compact-metric-header">
+          <div class="compact-metric-title">
+            <span>🏛️ समग्र म.प्र. आंकड़े (बिना फ़िल्टर):</span>
+            <span class="section-badge badge-mp">MP State Total</span>
+          </div>
         </div>
+        <div class="compact-metric-grid" style="margin-bottom: 6px">
+          <div class="compact-metric-pill card-mp-reg">
+            <div class="pill-left">
+              <span class="pill-icon">👥</span>
+              <span class="pill-label">Total Reg. (MP)</span>
+            </div>
+            <span class="pill-value" id="totalRegMPDisplay">0</span>
+          </div>
+          <div class="compact-metric-pill card-mp-donor">
+            <div class="pill-left">
+              <span class="pill-icon">🤝</span>
+              <span class="pill-label">Total Donor (MP)</span>
+            </div>
+            <span class="pill-value" id="totalDonorMPDisplay">0</span>
+          </div>
+          <div class="compact-metric-pill card-mp-nondonor">
+            <div class="pill-left">
+              <span class="pill-icon">⚠️</span>
+              <span class="pill-label">Total Non-Donor (MP)</span>
+            </div>
+            <span class="pill-value" id="totalNonDonorMPDisplay">0</span>
+          </div>
+        </div>
+
+        <!-- 2. District Level Metrics (Filtered by District) -->
+        <div class="compact-metric-header">
+          <div class="compact-metric-title">
+            <span>📍 जिला स्तरीय आंकड़े:</span>
+            <span class="section-badge badge-district" id="kpiDistrictBadge"
+              >चयनित जिला</span
+            >
+          </div>
+        </div>
+        <div class="compact-metric-grid">
+          <div class="compact-metric-pill card-dist-reg">
+            <div class="pill-left">
+              <span class="pill-icon">📋</span>
+              <span class="pill-label">District Reg.</span>
+            </div>
+            <span class="pill-value" id="totalCountDisplay">0</span>
+          </div>
+          <div class="compact-metric-pill card-dist-donor">
+            <div class="pill-left">
+              <span class="pill-icon">💚</span>
+              <span class="pill-label">District Donor</span>
+            </div>
+            <span class="pill-value" id="totalDonorDistrictDisplay">0</span>
+          </div>
+          <div class="compact-metric-pill card-dist-nondonor">
+            <div class="pill-left">
+              <span class="pill-icon">🔴</span>
+              <span class="pill-label">District Non-Donor</span>
+            </div>
+            <span class="pill-value" id="totalNonDonorDistrictDisplay">0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Summary Table Card -->
+      <div class="table-card" id="summaryCard" style="display: none">
+        <div class="table-header-bar">
+          <div class="table-title">
+            <span>📊 ब्लॉक-वार सारांश (Block Summary)</span>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table id="summaryTable" style="display: none">
+            <thead>
+              <tr>
+                <th class="text-left" style="width: 40%">ब्लॉक (BLOCK)</th>
+                <th style="width: 20%">असहयोग</th>
+                <th style="width: 20%">सहयोग</th>
+                <th style="width: 20%">कुल</th>
+              </tr>
+            </thead>
+            <tbody id="summaryTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Detailed List Card -->
+      <div class="table-card">
+        <div class="table-header-bar">
+          <div class="table-title-area">
+            <div class="table-title">
+              <span>📋 विस्तृत सूची</span>
+              <span id="searchMatchCount" class="count-pill"></span>
+            </div>
+            <!-- View Toggle Buttons (Table vs Card) -->
+            <div class="view-toggle-group">
+              <button
+                type="button"
+                id="btnViewTable"
+                class="view-btn active"
+                onclick="setViewMode('table')"
+                title="तालिका दृश्य"
+              >
+                <span>📋</span> <span class="view-btn-text">टेबल</span>
+              </button>
+              <button
+                type="button"
+                id="btnViewCard"
+                class="view-btn"
+                onclick="setViewMode('card')"
+                title="मोबाइल कार्ड दृश्य"
+              >
+                <span>📱</span> <span class="view-btn-text">कार्ड्स</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="search-box-container">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              id="tableSearchInput"
+              class="search-input"
+              placeholder="सूची में तुरंत खोजें (नाम / स्कूल)..."
+              onkeyup="filterTableSearch()"
+            />
+          </div>
+        </div>
+
+        <!-- Table View -->
+        <div id="tableWrapper">
+          <div class="mobile-scroll-hint">
+            👈 दाएँ-बाएँ स्क्रॉल करें (Scroll Table) 👉
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 45px">क्र.</th>
+                  <th style="width: 120px">Registration No.</th>
+                  <th class="text-left" style="min-width: 160px">नाम (Name)</th>
+                  <th>संभाग</th>
+                  <th>जिला</th>
+                  <th>ब्लॉक</th>
+                  <th class="text-left" style="min-width: 180px">
+                    विद्यालय (School)
+                  </th>
+                  <th style="width: 105px">स्थिति</th>
+                </tr>
+              </thead>
+              <tbody id="dataTableBody">
+                <tr>
+                  <td colspan="8" class="empty-state">
+                    <div class="empty-icon">👆</div>
+                    <p>
+                      कृपया संभाग, जिला एवं ब्लॉक चुनें और
+                      <strong>'डेटा देखें (SUBMIT)'</strong> पर क्लिक करें।
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Mobile Card View -->
+        <div id="cardsContainer" class="cards-grid" style="display: none"></div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="portal-footer">
+        <div class="creator-chip">
+          <span
+            >👨‍💻 पोर्टल निर्माता: <strong>संजय जैन</strong> (जिला IT सेल प्रभारी,
+            शिवपुरी, म.प्र.)</span
+          >
+        </div>
+        <p>PMUMS शिक्षक संघ, मध्य प्रदेश &copy; 2026 | सभी अधिकार सुरक्षित</p>
+      </footer>
     </div>
 
-    <!-- म.प्र. स्तर (बिना फ़िल्टर के कुल आंकड़े) -->
-    <div class="total-reg-bar mp-bar">
-        <div>
-            <span>Total Registration (MP):</span>
-            <span id="totalRegMPDisplay">0</span>
-        </div>
-        <div>
-            <span>Total Donor (MP):</span>
-            <span id="totalDonorMPDisplay">0</span>
-        </div>
-        <div>
-            <span>Total Non-Donor (MP):</span>
-            <span id="totalNonDonorMPDisplay">0</span>
-        </div>
-    </div>
+    <script>
+      const mpData = {
+        Bhopal: {
+          Bhopal: [
+            "Berasia",
+            "Phanda Gramin",
+            "Phanda URBAN- New City",
+            "Phanda URBAN- Old City",
+          ],
+          Raisen: [
+            "Badi",
+            "Begamganj",
+            "Gairatganj",
+            "Obedullaganj",
+            "Sanchi",
+            "Silwani",
+            "Udaipura",
+          ],
+          Rajgarh: [
+            "Biaora",
+            "Khilchipur",
+            "Narsinghgarh",
+            "Rajgarh",
+            "Sarangpur",
+            "Zirapur",
+          ],
+          Sehore: [
+            "Ashta",
+            "Budhani",
+            "Ichhawar",
+            "Nasrullaganj (Bhairunda)",
+            "Sehore",
+          ],
+          Vidisha: [
+            "Basoda",
+            "Gyaraspur",
+            "Kurwai",
+            "Lateri",
+            "Nateran",
+            "Sironj",
+            "Vidisha",
+          ],
+        },
+        Chambal: {
+          Bhind: ["Ater", "Bhind", "Gohad", "Lahar", "Mehgaon", "Roun"],
+          Morena: [
+            "Ambah",
+            "Joura",
+            "Kailaras",
+            "Morena",
+            "Pahadgarh",
+            "Porsa",
+            "Sabalgarh",
+          ],
+          Sheopur: ["Karahal", "Sheopur", "Vijaypur"],
+        },
+        Gwalior: {
+          Ashoknagar: ["Ashoknagar", "Chanderi", "Isagarh", "Mugawali"],
+          Datia: ["Bhander", "Datia", "Seondha"],
+          Guna: ["Aron", "Bamori", "Chachoda", "Guna", "Raghogarh"],
+          Gwalior: [
+            "Bhitarvar",
+            "Dabra",
+            "Ghatigaon",
+            "Murar rural",
+            "Murar Urban 1",
+            "Murar Urban 2",
+          ],
+          Shivpuri: [
+            "Badarwas",
+            "Karaira",
+            "Khaniyadhana",
+            "Kolaras",
+            "Narvar",
+            "Pichhore",
+            "Pohri",
+            "Shivpuri",
+          ],
+        },
+        Indore: {
+          Alirajpur: [
+            "Alirajpur",
+            "Bhabra",
+            "Jobat",
+            "Katthiwara",
+            "Sondwa",
+            "Udaygarh",
+          ],
+          Barwani: [
+            "Barwani",
+            "Niwali",
+            "Pansemal",
+            "Pati",
+            "Rajpur",
+            "Sendhwa",
+            "Thikri",
+          ],
+          Burhanpur: ["Burhanpur", "Khaknar"],
+          Indore: ["Depalpur", "Indore", "Mhow", "Sanwer"],
+          Jhabua: [
+            "Jhabua",
+            "Meghnagar",
+            "Petlawad",
+            "Rama",
+            "Ranapur",
+            "Thandla",
+          ],
+          Khandwa: [
+            "Baladi",
+            "Chhaigaonmakhan",
+            "Harsud",
+            "Khandwa",
+            "Khalwa",
+            "Pandhana",
+            "Punasa",
+          ],
+          Khargone: [
+            "Badwaha",
+            "Bhagwanpura",
+            "Bhikangaon",
+            "Gogawan",
+            "Jhirniya",
+            "Kasrawad",
+            "Khargone",
+            "Maheshwar",
+            "Segaon",
+          ],
+          Dhar: [
+            "Badnawar",
+            "Dhar",
+            "Dharampuri",
+            "Gandhwani",
+            "Kukshi",
+            "Manavar",
+            "Nalchha",
+            "Nisarpur",
+            "Sardarpur",
+            "Tirla",
+            "Umarban",
+          ],
+        },
+        Jabalpur: {
+          Balaghat: [
+            "Baihar",
+            "Balaghat",
+            "Birsa",
+            "Katangi",
+            "Khairlanji",
+            "Kirnapur",
+            "LalBarra",
+            "Lanji",
+            "Paraswada",
+            "Waraseoni",
+          ],
+          Chhindwara: [
+            "Amarwara",
+            "Bichhua",
+            "Chhindwara",
+            "Chourai",
+            "Harrai",
+            "Junnardeo",
+            "Mohkhed",
+            "Parasia",
+            "Tamia",
+          ],
+          Jabalpur: [
+            "Jabalpur Rural",
+            "Jabalpur URBAN- 1",
+            "Jabalpur URBAN- 2",
+            "Kundam",
+            "Majholi",
+            "Panagar",
+            "Patan",
+            "Shahpura",
+            "Sihora",
+          ],
+          Katni: [
+            "Badwara",
+            "Bahoriband",
+            "Dhimar kheda",
+            "Katni",
+            "Rithi",
+            "Vijayraghavgarh",
+          ],
+          Mandla: [
+            "Beejadandi",
+            "Bichhiya",
+            "Ghughri",
+            "Mandla",
+            "Mawai",
+            "Mohgaon",
+            "Nainpur",
+            "Narayanganj",
+            "Niwas",
+          ],
+          Narsinghpur: [
+            "Chawarpatha",
+            "Chichli",
+            "Gotegaon Shridham",
+            "Kareli",
+            "Narsinghpur",
+            "saikheda",
+          ],
+          Pandhurna: ["Pandhurna", "Sausar"],
+          Seoni: [
+            "Barghat",
+            "Chhapara",
+            "Dhanora",
+            "Ghansore",
+            "Keolari",
+            "Kurai",
+            "Lakhnadon",
+            "Seoni",
+          ],
+          Dindori: [
+            "Amarpur",
+            "Bajag",
+            "Dindori",
+            "Karanjia",
+            "Mehandwani",
+            "Samnapur",
+          ],
+        },
+        Narmadapuram: {
+          Narmadapuram: [
+            "Babai (Makhannagar)",
+            "Bankhedi",
+            "Kesla",
+            "Narmadapuram",
+            "Pipariya",
+            "Sivni maalva",
+            "Sohagpur",
+          ],
+          Betul: [
+            "Amla",
+            "Athner",
+            "Bainsdehi",
+            "Bhimpur",
+            "Chicholi",
+            "Ghoradongri",
+            "Multai",
+            "Prabhat Pattan",
+            "Shahpur",
+          ],
+          Harda: ["Harda", "Khirkiya", "Timarni"],
+        },
+        Rewa: {
+          Rewa: ["Gangeo", "Jawa", "Raipur (K)", "Rewa", "Sirmour", "Teonthar"],
+          Mauganj: ["Mauganj", "Hanumana", "Naigarhi"],
+          Maihar: ["Amarpatan", "Maihar", "Ram Nagar"],
+          Satna: [
+            "Majhgwan",
+            "Nagod",
+            "Rampur Baghelan",
+            "Satna (Sohwal)",
+            "Uchehra",
+          ],
+          Sidhi: ["Sidhi", "Kusami", "Majhauli", "Rampur Naikin", "Sihawal"],
+          Singrauli: ["Waidhan", "Deosar", "Chitarangi"],
+        },
+        Sagar: {
+          Chhatarpur: [
+            "Badamalahara",
+            "Bijawar",
+            "Buxwaha",
+            "Chhatarpur/Ishanagar",
+            "Barihar/Gaurihar",
+            "Laundi",
+            "Nowgong",
+            "Rajnagar",
+          ],
+          Damoh: [
+            "Batiyagarh",
+            "Damoh",
+            "Hatta",
+            "Jabera",
+            "Patera",
+            "Tendukheda",
+          ],
+          Niwari: ["Niwari", "Prathvipur"],
+          Panna: ["Ajaigarh", "Gunour", "Panna", "Pawai", "Shahnagar"],
+          Sagar: [
+            "Banda",
+            "Bina",
+            "Deori",
+            "Jaisinagar",
+            "Kesli",
+            "Khurai",
+            "Malthon",
+            "Rahatgarh",
+            "Rehli",
+            "Sagar",
+            "Shahgarh",
+          ],
+          Tikamgarh: ["Baldewgarh", "Jatara", "Palera", "Tikamgarh"],
+        },
+        Shahdol: {
+          Anuppur: ["Anuppur", "Jaithari", "Kotma", "Pushpraj Garh"],
+          Umaria: ["Karkeli", "Manpur", "Pali"],
+          Shahdol: [
+            "Beohari",
+            "Burhar",
+            "Gohparu",
+            "Jaisinghnagar",
+            "Sohagpur",
+          ],
+        },
+        Ujjain: {
+          "Agar Malwa": ["Agar", "Barod", "Nalkheda", "Susner"],
+          Dewas: [
+            "Bagli",
+            "Dewas",
+            "Kannod",
+            "Khategaon",
+            "Sonkatch",
+            "Tonkkhurd",
+          ],
+          Mandsaur: ["Bhanpura", "Garoth", "Mandsaur", "Malhargarh", "Sitamau"],
+          Neemuch: ["Jawad", "Manasa", "Neemuch"],
+          Ratlam: ["Alot", "Bajna", "Jaora", "Piploda", "Ratlam", "Sailana"],
+          Shajapur: ["M Barodiya", "Shajapur", "Shujalpur", "Kalapipal"],
+          Ujjain: [
+            "Badnagar",
+            "Ghattia",
+            "Khachrod",
+            "Mahidpur",
+            "Tarana",
+            "Ujjain Rural",
+            "Ujjain URBUN",
+          ],
+        },
+      };
 
-    <!-- जिला स्तर (फ़िल्टर अनुसार आंकड़े) -->
-    <div class="total-reg-bar">
-        <div>
-            <span>Total Registration (District):</span>
-            <span id="totalCountDisplay">0</span>
-        </div>
-        <div>
-            <span>Total Donor (District):</span>
-            <span id="totalDonorDistrictDisplay">0</span>
-        </div>
-        <div>
-            <span>Total Non-Donor (District):</span>
-            <span id="totalNonDonorDistrictDisplay">0</span>
-        </div>
-    </div>
+      let currentFilteredData = [];
+      let currentViewMode = window.innerWidth <= 768 ? "card" : "table";
 
-    <!-- सारांश तालिका (Summary Table) -->
-    <table id="summaryTable" style="margin-top: 0; display: none; margin-left: auto; margin-right: auto;">
-        <thead>
-            <tr>
-                <th>BLOCK</th>
-                <th>NON_DONOR</th>
-                <th>DONOR</th>
-                <th>Total Registration</th>
-            </tr>
-        </thead>
-        <tbody id="summaryTableBody"></tbody>
-    </table>
-
-    <div style="margin: 15px 0; font-weight: bold; color: #b71c1c;">विस्तृत सूची (Detailed List):</div>
-
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 5%;">S.No.</th>
-                <th style="width: 12%;">Registration No.</th>
-                <th class="text-left" style="width: 18%;">Name</th>
-                <th style="width: 10%;">Division</th>
-                <th style="width: 10%;">District</th>
-                <th style="width: 10%;">Block</th>
-                <th class="text-left" style="width: 20%;">School</th>
-                <th style="width: 15%; white-space: nowrap;">असहयोग/सहयोग</th>
-            </tr>
-        </thead>
-        <tbody id="dataTableBody">
-            <tr>
-                <td colspan="8">कृपया विकल्प चुनकर 'SUBMIT' बटन पर क्लिक करें...</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<script>
-    const mpData = {
-        "Bhopal": {
-            "Bhopal": ["Berasia", "Phanda Gramin", "Phanda URBAN- New City", "Phanda URBAN- Old City"],
-            "Raisen": ["Badi", "Begamganj", "Gairatganj", "Obedullaganj", "Sanchi", "Silwani", "Udaipura"],
-            "Rajgarh": ["Biaora", "Khilchipur", "Narsinghgarh", "Rajgarh", "Sarangpur", "Zirapur"],
-            "Sehore": ["Ashta", "Budhani", "Ichhawar", "Nasrullaganj (Bhairunda)", "Sehore"],
-            "Vidisha": ["Basoda", "Gyaraspur", "Kurwai", "Lateri", "Nateran", "Sironj", "Vidisha"]
-        },
-        "Chambal": {
-            "Bhind": ["Ater", "Bhind", "Gohad", "Lahar", "Mehgaon", "Roun"],
-            "Morena": ["Ambah", "Joura", "Kailaras", "Morena", "Pahadgarh", "Porsa", "Sabalgarh"],
-            "Sheopur": ["Karahal", "Sheopur", "Vijaypur"]
-        },
-        "Gwalior": {
-            "Ashoknagar": ["Ashoknagar", "Chanderi", "Isagarh", "Mugawali"],
-            "Datia": ["Bhander", "Datia", "Seondha"],
-            "Guna": ["Aron", "Bamori", "Chachoda", "Guna", "Raghogarh"],
-            "Gwalior": ["Bhitarvar", "Dabra", "Ghatigaon", "Murar rural", "Murar Urban 1", "Murar Urban 2"],
-            "Shivpuri": ["Badarwas", "Karaira", "Khaniyadhana", "Kolaras", "Narvar", "Pichhore", "Pohri", "Shivpuri"]
-        },
-        "Indore": {
-            "Alirajpur": ["Alirajpur", "Bhabra", "Jobat", "Katthiwara", "Sondwa", "Udaygarh"],
-            "Barwani": ["Barwani", "Niwali", "Pansemal", "Pati", "Rajpur", "Sendhwa", "Thikri"],
-            "Burhanpur": ["Burhanpur", "Khaknar"],
-            "Indore": ["Depalpur", "Indore", "Mhow", "Sanwer"],
-            "Jhabua": ["Jhabua", "Meghnagar", "Petlawad", "Rama", "Ranapur", "Thandla"],
-            "Khandwa": ["Baladi", "Chhaigaonmakhan", "Harsud", "Khandwa", "Khalwa", "Pandhana", "Punasa"],
-            "Khargone": ["Badwaha", "Bhagwanpura", "Bhikangaon", "Gogawan", "Jhirniya", "Kasrawad", "Khargone", "Maheshwar", "Segaon"],
-            "Dhar": ["Badnawar", "Dhar", "Dharampuri", "Gandhwani", "Kukshi", "Manavar", "Nalchha", "Nisarpur", "Sardarpur", "Tirla", "Umarban"]
-        },
-        "Jabalpur": {
-            "Balaghat": ["Baihar", "Balaghat", "Birsa", "Katangi", "Khairlanji", "Kirnapur", "LalBarra", "Lanji", "Paraswada", "Waraseoni"],
-            "Chhindwara": ["Amarwara", "Bichhua", "Chhindwara", "Chourai", "Harrai", "Junnardeo", "Mohkhed", "Parasia", "Tamia"],
-            "Jabalpur": ["Jabalpur Rural", "Jabalpur URBAN- 1", "Jabalpur URBAN- 2", "Kundam", "Majholi", "Panagar", "Patan", "Shahpura", "Sihora"],
-            "Katni": ["Badwara", "Bahoriband", "Dhimar kheda", "Katni", "Rithi", "Vijayraghavgarh"],
-            "Mandla": ["Beejadandi", "Bichhiya", "Ghughri", "Mandla", "Mawai", "Mohgaon", "Nainpur", "Narayanganj", "Niwas"],
-            "Narsinghpur": ["Chawarpatha", "Chichli", "Gotegaon Shridham", "Kareli", "Narsinghpur", "saikheda"],
-            "Pandhurna": ["Pandhurna", "Sausar"],
-            "Seoni": ["Barghat", "Chhapara", "Dhanora", "Ghansore", "Keolari", "Kurai", "Lakhnadon", "Seoni"],
-            "Dindori": ["Amarpur", "Bajag", "Dindori", "Karanjia", "Mehandwani", "Samnapur"]
-        },
-        "Narmadapuram": {
-            "Narmadapuram": ["Babai (Makhannagar)", "Bankhedi", "Kesla", "Narmadapuram", "Pipariya", "Sivni maalva", "Sohagpur"],
-            "Betul": ["Amla", "Athner", "Bainsdehi", "Bhimpur", "Chicholi", "Ghoradongri", "Multai", "Prabhat Pattan", "Shahpur"],
-            "Harda": ["Harda", "Khirkiya", "Timarni"]
-        },
-        "Rewa": {
-            "Rewa": ["Gangeo", "Jawa", "Raipur (K)", "Rewa", "Sirmour", "Teonthar"],
-            "Mauganj": ["Mauganj", "Hanumana", "Naigarhi"],
-            "Maihar": ["Amarpatan", "Maihar", "Ram Nagar"],
-            "Satna": ["Majhgwan", "Nagod", "Rampur Baghelan", "Satna (Sohwal)", "Uchehra"],
-            "Sidhi": ["Sidhi", "Kusami", "Majhauli", "Rampur Naikin", "Sihawal"],
-            "Singrauli": ["Waidhan", "Deosar", "Chitarangi"]
-        },
-        "Sagar": {
-            "Chhatarpur": ["Badamalahara", "Bijawar", "Buxwaha", "Chhatarpur/Ishanagar", "Barihar/Gaurihar", "Laundi", "Nowgong", "Rajnagar"],
-            "Damoh": ["Batiyagarh", "Damoh", "Hatta", "Jabera", "Patera", "Tendukheda"],
-            "Niwari": ["Niwari", "Prathvipur"],
-            "Panna": ["Ajaigarh", "Gunour", "Panna", "Pawai", "Shahnagar"],
-            "Sagar": ["Banda", "Bina", "Deori", "Jaisinagar", "Kesli", "Khurai", "Malthon", "Rahatgarh", "Rehli", "Sagar", "Shahgarh"],
-            "Tikamgarh": ["Baldewgarh", "Jatara", "Palera", "Tikamgarh"]
-        },
-        "Shahdol": {
-            "Anuppur": ["Anuppur", "Jaithari", "Kotma", "Pushpraj Garh"],
-            "Umaria": ["Karkeli", "Manpur", "Pali"],
-            "Shahdol": ["Beohari", "Burhar", "Gohparu", "Jaisinghnagar", "Sohagpur"]
-        },
-        "Ujjain": {
-            "Agar Malwa": ["Agar", "Barod", "Nalkheda", "Susner"],
-            "Dewas": ["Bagli", "Dewas", "Kannod", "Khategaon", "Sonkatch", "Tonkkhurd"],
-            "Mandsaur": ["Bhanpura", "Garoth", "Mandsaur", "Malhargarh", "Sitamau"],
-            "Neemuch": ["Jawad", "Manasa", "Neemuch"],
-            "Ratlam": ["Alot", "Bajna", "Jaora", "Piploda", "Ratlam", "Sailana"],
-            "Shajapur": ["M Barodiya", "Shajapur", "Shujalpur", "Kalapipal"],
-            "Ujjain": ["Badnagar", "Ghattia", "Khachrod", "Mahidpur", "Tarana", "Ujjain Rural", "Ujjain URBUN"]
-        }
-    };
-
-    let currentFilteredData = []; 
-
-    window.onload = function() {
+      window.onload = function () {
         const divisionSelect = document.getElementById("divisionSelect");
         for (let division in mpData) {
-            let option = document.createElement("option");
-            option.value = division;
-            option.textContent = division;
-            divisionSelect.appendChild(option);
+          let option = document.createElement("option");
+          option.value = division;
+          option.textContent = division;
+          divisionSelect.appendChild(option);
         }
-    };
 
-    function loadDistricts() {
-        const selectedDivision = document.getElementById("divisionSelect").value;
-        const districtSelect = document.getElementById("districtSelect");
-        const blockSelect = document.getElementById("blockSelect");
+        updateViewModeUI();
+      };
 
-        districtSelect.innerHTML = '<option value="">-- जिला चुनें --</option>';
-        blockSelect.innerHTML = '<option value="">-- पहले जिला चुनें --</option>';
-        districtSelect.disabled = true;
-        blockSelect.disabled = true;
-        document.getElementById("submitBtn").disabled = true;
-        document.getElementById("pdfBtn").disabled = true;
-        document.getElementById("csvBtn").disabled = true;
+      // Scroll listener for floating action button (FAB)
+      window.addEventListener("scroll", () => {
+        const btn = document.getElementById("scrollToTopBtn");
+        if (btn) {
+          btn.classList.toggle("visible", window.scrollY > 250);
+        }
+      });
+
+      function setViewMode(mode) {
+        currentViewMode = mode;
+        updateViewModeUI();
+      }
+
+      function updateViewModeUI() {
+        const tableWrapper = document.getElementById("tableWrapper");
+        const cardsContainer = document.getElementById("cardsContainer");
+        const btnTable = document.getElementById("btnViewTable");
+        const btnCard = document.getElementById("btnViewCard");
+
+        if (currentViewMode === "card") {
+          tableWrapper.style.display = "none";
+          cardsContainer.style.display = "grid";
+          btnCard.classList.add("active");
+          btnTable.classList.remove("active");
+        } else {
+          tableWrapper.style.display = "block";
+          cardsContainer.style.display = "none";
+          btnTable.classList.add("active");
+          btnCard.classList.remove("active");
+        }
+        filterTableSearch();
+      }
+
+      function resetAllMetrics() {
         document.getElementById("totalRegMPDisplay").textContent = "0";
         document.getElementById("totalDonorMPDisplay").textContent = "0";
         document.getElementById("totalNonDonorMPDisplay").textContent = "0";
         document.getElementById("totalCountDisplay").textContent = "0";
         document.getElementById("totalDonorDistrictDisplay").textContent = "0";
-        document.getElementById("totalNonDonorDistrictDisplay").textContent = "0";
+        document.getElementById("totalNonDonorDistrictDisplay").textContent =
+          "0";
         document.getElementById("summaryTable").style.display = "none";
+        document.getElementById("summaryCard").style.display = "none";
+        document.getElementById("cardsContainer").innerHTML = "";
+        document.getElementById("tableSearchInput").value = "";
+        document.getElementById("searchMatchCount").textContent = "";
+      }
+
+      function loadDistricts() {
+        const selectedDivision =
+          document.getElementById("divisionSelect").value;
+        const districtSelect = document.getElementById("districtSelect");
+        const blockSelect = document.getElementById("blockSelect");
+
+        districtSelect.innerHTML = '<option value="">-- जिला चुनें --</option>';
+        blockSelect.innerHTML =
+          '<option value="">-- पहले जिला चुनें --</option>';
+        districtSelect.disabled = true;
+        blockSelect.disabled = true;
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById("pdfBtn").disabled = true;
+        document.getElementById("csvBtn").disabled = true;
+
+        resetAllMetrics();
 
         if (selectedDivision) {
-            districtSelect.disabled = false;
-            let districts = mpData[selectedDivision];
-            for (let district in districts) {
-                let option = document.createElement("option");
-                option.value = district;
-                option.textContent = district;
-                districtSelect.appendChild(option);
-            }
+          districtSelect.disabled = false;
+          let districts = mpData[selectedDivision];
+          for (let district in districts) {
+            let option = document.createElement("option");
+            option.value = district;
+            option.textContent = district;
+            districtSelect.appendChild(option);
+          }
         }
         updateHeaderInfo();
-    }
+      }
 
-    function loadBlocks() {
-        const selectedDivision = document.getElementById("divisionSelect").value;
-        const selectedDistrict = document.getElementById("districtSelect").value;
+      function loadBlocks() {
+        const selectedDivision =
+          document.getElementById("divisionSelect").value;
+        const selectedDistrict =
+          document.getElementById("districtSelect").value;
         const blockSelect = document.getElementById("blockSelect");
 
         blockSelect.innerHTML = '<option value="">-- ब्लॉक चुनें --</option>';
@@ -427,68 +1722,136 @@
         document.getElementById("submitBtn").disabled = true;
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
-        document.getElementById("totalRegMPDisplay").textContent = "0";
-        document.getElementById("totalDonorMPDisplay").textContent = "0";
-        document.getElementById("totalNonDonorMPDisplay").textContent = "0";
-        document.getElementById("totalCountDisplay").textContent = "0";
-        document.getElementById("totalDonorDistrictDisplay").textContent = "0";
-        document.getElementById("totalNonDonorDistrictDisplay").textContent = "0";
-        document.getElementById("summaryTable").style.display = "none";
+
+        resetAllMetrics();
 
         if (selectedDistrict) {
-            blockSelect.disabled = false;
+          blockSelect.disabled = false;
 
-            let allOption = document.createElement("option");
-            allOption.value = "All Block";
-            allOption.textContent = "All Block";
-            blockSelect.appendChild(allOption);
+          let allOption = document.createElement("option");
+          allOption.value = "All Block";
+          allOption.textContent = "All Block (सभी ब्लॉक)";
+          blockSelect.appendChild(allOption);
 
-            let blocks = mpData[selectedDivision][selectedDistrict];
-            if (blocks) {
-                blocks.forEach(block => {
-                    let option = document.createElement("option");
-                    option.value = block;
-                    option.textContent = block;
-                    blockSelect.appendChild(option);
-                });
-            }
+          let blocks = mpData[selectedDivision][selectedDistrict];
+          if (blocks) {
+            blocks.forEach((block) => {
+              let option = document.createElement("option");
+              option.value = block;
+              option.textContent = block;
+              blockSelect.appendChild(option);
+            });
+          }
         }
         updateHeaderInfo();
-    }
+      }
 
-    function toggleButtons() {
+      function toggleButtons() {
         const blockVal = document.getElementById("blockSelect").value;
         const submitBtn = document.getElementById("submitBtn");
         submitBtn.disabled = !(blockVal && blockVal !== "");
-    }
+      }
 
-    function updateHeaderInfo() {
-        const divVal = document.getElementById("divisionSelect").value;
+      function updateHeaderInfo() {
         const distVal = document.getElementById("districtSelect").value;
-        const blockVal = document.getElementById("blockSelect").value;
-
-        document.getElementById("displayDivision").textContent = divVal || "---";
-        document.getElementById("displayDistrict").textContent = distVal || "---";
-        document.getElementById("displayBlock").textContent = blockVal || "---";
+        const distBadge = document.getElementById("kpiDistrictBadge");
+        if (distBadge) {
+          distBadge.textContent = distVal ? distVal : "चयनित जिला";
+        }
         toggleButtons();
-    }
+      }
 
-    async function fetchDataFromMultipleSources() {
-        const selectedDistrict = document.getElementById("districtSelect").value;
+      function escapeHtml(str) {
+        if (!str && str !== 0) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function filterTableSearch() {
+        const query = (document.getElementById("tableSearchInput").value || "")
+          .toLowerCase()
+          .trim();
+
+        // 1. Filter Table rows
+        const rows = document.querySelectorAll("#dataTableBody tr");
+        let tableMatch = 0;
+        if (rows.length > 0 && rows[0].cells.length > 1) {
+          rows.forEach((row) => {
+            const text = row.textContent.toLowerCase();
+            if (query === "" || text.includes(query)) {
+              row.style.display = "";
+              tableMatch++;
+            } else {
+              row.style.display = "none";
+            }
+          });
+        }
+
+        // 2. Filter Mobile Cards
+        const cards = document.querySelectorAll("#cardsContainer .member-card");
+        let cardMatch = 0;
+        cards.forEach((card) => {
+          const text = card.textContent.toLowerCase();
+          if (query === "" || text.includes(query)) {
+            card.style.display = "";
+            cardMatch++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+
+        const activeCount = currentViewMode === "card" ? cardMatch : tableMatch;
+        const matchPill = document.getElementById("searchMatchCount");
+        if (matchPill) {
+          matchPill.textContent = query
+            ? `${activeCount} मिले`
+            : `${currentFilteredData.length} रिकॉर्ड`;
+        }
+      }
+
+      async function fetchDataFromMultipleSources() {
+        const selectedDistrict =
+          document.getElementById("districtSelect").value;
         const selectedBlock = document.getElementById("blockSelect").value;
         const tableBody = document.getElementById("dataTableBody");
+        const cardsContainer = document.getElementById("cardsContainer");
         const pdfBtn = document.getElementById("pdfBtn");
         const csvBtn = document.getElementById("csvBtn");
         const totalRegMPDisplay = document.getElementById("totalRegMPDisplay");
-        const totalDonorMPDisplay = document.getElementById("totalDonorMPDisplay");
-        const totalNonDonorMPDisplay = document.getElementById("totalNonDonorMPDisplay");
+        const totalDonorMPDisplay = document.getElementById(
+          "totalDonorMPDisplay",
+        );
+        const totalNonDonorMPDisplay = document.getElementById(
+          "totalNonDonorMPDisplay",
+        );
         const totalCountDisplay = document.getElementById("totalCountDisplay");
-        const totalDonorDistrictDisplay = document.getElementById("totalDonorDistrictDisplay");
-        const totalNonDonorDistrictDisplay = document.getElementById("totalNonDonorDistrictDisplay");
+        const totalDonorDistrictDisplay = document.getElementById(
+          "totalDonorDistrictDisplay",
+        );
+        const totalNonDonorDistrictDisplay = document.getElementById(
+          "totalNonDonorDistrictDisplay",
+        );
+        const summaryCard = document.getElementById("summaryCard");
+        const summaryTable = document.getElementById("summaryTable");
 
         if (!selectedBlock) return;
 
-        tableBody.innerHTML = `<tr><td colspan="8">दोनों स्रोतों से डेटा लोड हो रहा है... कृपया प्रतीक्षा करें...</td></tr>`;
+        const loadingHtml = `
+            <div class="empty-state">
+                <div class="loader-spinner"></div>
+                <div style="font-size: 13px; font-weight: 700; color: #1e40af; margin-top: 6px;">
+                    डेटा लोड हो रहा है... कृपया प्रतीक्षा करें...
+                </div>
+            </div>
+        `;
+
+        tableBody.innerHTML = `<tr><td colspan="8">${loadingHtml}</td></tr>`;
+        cardsContainer.innerHTML = loadingHtml;
+
         pdfBtn.disabled = true;
         csvBtn.disabled = true;
         totalRegMPDisplay.textContent = "0";
@@ -497,245 +1860,350 @@
         totalCountDisplay.textContent = "0";
         totalDonorDistrictDisplay.textContent = "0";
         totalNonDonorDistrictDisplay.textContent = "0";
-        document.getElementById("summaryTable").style.display = "none";
+        summaryCard.style.display = "none";
+        summaryTable.style.display = "none";
+        document.getElementById("tableSearchInput").value = "";
+        document.getElementById("searchMatchCount").textContent = "";
 
-        const url1 = "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec";
-        const url2 = "https://script.google.com/macros/s/AKfycbzsa2KMFIcEALPqJTePS5e1UDLmtLagiNHBwylbs64lM2_In1t1blzd8rW6OKamtxg/exec";
+        const url1 =
+          "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec";
+        const url2 =
+          "https://script.google.com/macros/s/AKfycbzsa2KMFIcEALPqJTePS5e1UDLmtLagiNHBwylbs64lM2_In1t1blzd8rW6OKamtxg/exec";
 
         try {
-            let responses = await Promise.all([
-                fetch(url1).then(res => res.json()).catch(() => []),
-                fetch(url2).then(res => res.json()).catch(() => [])
-            ]);
+          let responses = await Promise.all([
+            fetch(url1)
+              .then((res) => res.json())
+              .catch(() => []),
+            fetch(url2)
+              .then((res) => res.json())
+              .catch(() => []),
+          ]);
 
-            let dataUrl1 = responses[0]; // URL 1 (Donor Source)
-            let dataUrl2 = responses[1]; // URL 2 (Non-Donor Source)
+          let dataUrl1 = responses[0]; // Donor Source
+          let dataUrl2 = responses[1]; // Non-Donor Source
 
-            // 1. समग्र म.प्र. (बिना फ़िल्टर) कुल Donor, Non-Donor एवं Registration की गिनती
-            let allDonorCount = dataUrl1.filter(row => {
-                if (!row || !row[1]) return false;
-                let regVal = row[1].toString().trim().toLowerCase();
-                if (regVal === "" || regVal.includes("reg")) return false;
-                let status = (row[9] || "").toString().trim().toUpperCase();
-                return status !== "" && status !== "NON_DONOR";
-            }).length;
+          // 1. समग्र म.प्र. (बिना फ़िल्टर) कुल Donor, Non-Donor एवं Registration
+          let allDonorCount = dataUrl1.filter((row) => {
+            if (!row || !row[1]) return false;
+            let regVal = row[1].toString().trim().toLowerCase();
+            if (regVal === "" || regVal.includes("reg")) return false;
+            let status = (row[9] || "").toString().trim().toUpperCase();
+            return status !== "" && status !== "NON_DONOR";
+          }).length;
 
-            let allNonDonorCount = dataUrl2.filter(row => {
-                if (!row || !row[1]) return false;
-                let regVal = row[1].toString().trim().toLowerCase();
-                if (regVal === "" || regVal.includes("reg")) return false;
-                let status = (row[9] || "").toString().trim().toUpperCase();
-                return status === "NON_DONOR";
-            }).length;
+          let allNonDonorCount = dataUrl2.filter((row) => {
+            if (!row || !row[1]) return false;
+            let regVal = row[1].toString().trim().toLowerCase();
+            if (regVal === "" || regVal.includes("reg")) return false;
+            let status = (row[9] || "").toString().trim().toUpperCase();
+            return status === "NON_DONOR";
+          }).length;
 
-            let allTotalRegCount = allDonorCount + allNonDonorCount;
+          let allTotalRegCount = allDonorCount + allNonDonorCount;
 
-            totalRegMPDisplay.textContent = allTotalRegCount;
-            totalDonorMPDisplay.textContent = allDonorCount;
-            totalNonDonorMPDisplay.textContent = allNonDonorCount;
+          totalRegMPDisplay.textContent =
+            allTotalRegCount.toLocaleString("en-IN");
+          totalDonorMPDisplay.textContent =
+            allDonorCount.toLocaleString("en-IN");
+          totalNonDonorMPDisplay.textContent =
+            allNonDonorCount.toLocaleString("en-IN");
 
-            // 2. जिले के अनुसार डेटा फ़िल्टर करना
-            let districtFilteredUrl1 = dataUrl1.filter(row => 
-                row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
+          // 2. जिले के अनुसार डेटा फ़िल्टर करना
+          let districtFilteredUrl1 = dataUrl1.filter(
+            (row) =>
+              row[6] &&
+              row[6].toString().trim().toLowerCase() ===
+                selectedDistrict.trim().toLowerCase(),
+          );
+
+          let districtFilteredUrl2 = dataUrl2.filter(
+            (row) =>
+              row[6] &&
+              row[6].toString().trim().toLowerCase() ===
+                selectedDistrict.trim().toLowerCase(),
+          );
+
+          let totalDonorCount = districtFilteredUrl1.filter((row) => {
+            let status = (row[9] || "").toString().trim().toUpperCase();
+            return status !== "" && status !== "NON_DONOR";
+          }).length;
+
+          let totalNonDonorCount = districtFilteredUrl2.filter((row) => {
+            let status = (row[9] || "").toString().trim().toUpperCase();
+            return status === "NON_DONOR";
+          }).length;
+
+          totalDonorDistrictDisplay.textContent =
+            totalDonorCount.toLocaleString("en-IN");
+          totalNonDonorDistrictDisplay.textContent =
+            totalNonDonorCount.toLocaleString("en-IN");
+
+          // ब्लॉक-वार सारांश
+          generateBlockSummaryFromSeparateSources(
+            districtFilteredUrl1,
+            districtFilteredUrl2,
+          );
+
+          let combinedData = [...dataUrl1, ...dataUrl2];
+          let districtFiltered = combinedData.filter(
+            (row) =>
+              row[6] &&
+              row[6].toString().trim().toLowerCase() ===
+                selectedDistrict.trim().toLowerCase(),
+          );
+
+          let filtered = [];
+          if (selectedBlock === "All Block") {
+            filtered = districtFiltered;
+          } else {
+            filtered = districtFiltered.filter(
+              (row) =>
+                row[7] &&
+                row[7].toString().trim().toLowerCase() ===
+                  selectedBlock.trim().toLowerCase(),
             );
+          }
 
-            let districtFilteredUrl2 = dataUrl2.filter(row => 
-                row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
-            );
-
-            // कुल Donor और Non-Donor की जिला-स्तर की गिनती
-            let totalDonorCount = districtFilteredUrl1.filter(row => {
-                let status = (row[9] || "").toString().trim().toUpperCase();
-                return status !== "" && status !== "NON_DONOR";
-            }).length;
-
-            let totalNonDonorCount = districtFilteredUrl2.filter(row => {
-                let status = (row[9] || "").toString().trim().toUpperCase();
-                return status === "NON_DONOR";
-            }).length;
-
-            totalDonorDistrictDisplay.textContent = totalDonorCount;
-            totalNonDonorDistrictDisplay.textContent = totalNonDonorCount;
-
-            // अलग-अलग URLs से ब्लॉक-वाइज समरी जनरेट करना
-            generateBlockSummaryFromSeparateSources(districtFilteredUrl1, districtFilteredUrl2);
-
-            let combinedData = [...dataUrl1, ...dataUrl2];
-            let districtFiltered = combinedData.filter(row => 
-                row[6] && row[6].toString().trim().toLowerCase() === selectedDistrict.trim().toLowerCase()
-            );
-
-            let filtered = [];
-            if (selectedBlock === "All Block") {
-                filtered = districtFiltered;
-            } else {
-                filtered = districtFiltered.filter(row => 
-                    row[7] && row[7].toString().trim().toLowerCase() === selectedBlock.trim().toLowerCase()
-                );
+          filtered.sort((a, b) => {
+            let blockA = (a[7] || "").toString().trim().toLowerCase();
+            let blockB = (b[7] || "").toString().trim().toLowerCase();
+            if (blockA !== blockB) {
+              return blockA.localeCompare(blockB, "hi");
             }
+            let nameA = (a[2] || "").toString().trim().toLowerCase();
+            let nameB = (b[2] || "").toString().trim().toLowerCase();
+            return nameA.localeCompare(nameB, "hi");
+          });
 
-            filtered.sort((a, b) => {
-                let blockA = (a[7] || "").toString().trim().toLowerCase();
-                let blockB = (b[7] || "").toString().trim().toLowerCase();
-                if (blockA !== blockB) {
-                    return blockA.localeCompare(blockB, 'hi');
-                }
-                let nameA = (a[2] || "").toString().trim().toLowerCase();
-                let nameB = (b[2] || "").toString().trim().toLowerCase();
-                return nameA.localeCompare(nameB, 'hi');
-            });
+          currentFilteredData = [...filtered];
+          totalCountDisplay.textContent =
+            districtFiltered.length.toLocaleString("en-IN");
 
-            currentFilteredData = [...filtered];
-            totalCountDisplay.textContent = districtFiltered.length;
+          tableBody.innerHTML = "";
+          cardsContainer.innerHTML = "";
 
-            tableBody.innerHTML = "";
-            if (!currentFilteredData || currentFilteredData.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="8">इस चयन के लिए कोई डेटा उपलब्ध नहीं है</td></tr>`;
-                return;
-            }
-
-            currentFilteredData.forEach((row, index) => {
-                let statusVal = (row[9] || "").toString().trim();
-                let isNonDonor = statusVal.toUpperCase() === "NON_DONOR";
-                let rowClass = isNonDonor ? "light-red" : "";
-
-                let tr = document.createElement("tr");
-                if (isNonDonor) {
-                    tr.className = "light-red";
-                }
-
-                tr.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${row[1] || ''}</td>
-                    <td class="text-left">${row[2] || ''}</td>
-                    <td>${row[5] || ''}</td>
-                    <td>${row[6] || ''}</td>
-                    <td>${row[7] || ''}</td>
-                    <td class="text-left">${row[8] || ''}</td>
-                    <td class="${rowClass}" style="white-space: nowrap;">${statusVal}</td>
+          if (!currentFilteredData || currentFilteredData.length === 0) {
+            const emptyMsg = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📂</div>
+                        <p>इस चयन के लिए कोई डेटा उपलब्ध नहीं है।</p>
+                    </div>
                 `;
-                tableBody.appendChild(tr);
-            });
+            tableBody.innerHTML = `<tr><td colspan="8">${emptyMsg}</td></tr>`;
+            cardsContainer.innerHTML = emptyMsg;
+            return;
+          }
 
-            pdfBtn.disabled = false;
-            csvBtn.disabled = false;
+          document.getElementById("searchMatchCount").textContent =
+            `${currentFilteredData.length} रिकॉर्ड`;
 
+          const fragmentTable = document.createDocumentFragment();
+          const fragmentCards = document.createDocumentFragment();
+
+          currentFilteredData.forEach((row, index) => {
+            let statusVal = (row[9] || "").toString().trim();
+            let isNonDonor = statusVal.toUpperCase() === "NON_DONOR";
+            let badgeClass = isNonDonor
+              ? "badge badge-non-donor"
+              : "badge badge-donor";
+            let badgeIcon = isNonDonor ? "⚠️" : "✅";
+            let badgeLabel = isNonDonor ? "असहयोग" : statusVal || "सहयोग";
+
+            // Table Row
+            let tr = document.createElement("tr");
+            if (isNonDonor) {
+              tr.className = "row-non-donor";
+            }
+            tr.innerHTML = `
+                    <td><strong>${index + 1}</strong></td>
+                    <td style="font-family: monospace; font-weight: 700; color: #1e3a8a;">${escapeHtml(row[1] || "")}</td>
+                    <td class="text-left" style="font-weight: 600; color: #0f172a;">${escapeHtml(row[2] || "")}</td>
+                    <td>${escapeHtml(row[5] || "")}</td>
+                    <td>${escapeHtml(row[6] || "")}</td>
+                    <td>${escapeHtml(row[7] || "")}</td>
+                    <td class="text-left">${escapeHtml(row[8] || "")}</td>
+                    <td>
+                        <span class="${badgeClass}">
+                            <span>${badgeIcon}</span>
+                            <span>${escapeHtml(badgeLabel)}</span>
+                        </span>
+                    </td>
+                `;
+            fragmentTable.appendChild(tr);
+
+            // Mobile Card
+            let card = document.createElement("div");
+            card.className = `member-card ${isNonDonor ? "member-card-non-donor" : "member-card-donor"}`;
+            card.innerHTML = `
+                    <div class="m-card-top">
+                        <div class="m-index-reg">
+                            <span>#${index + 1}</span>
+                            <span class="m-reg-badge">${escapeHtml(row[1] || "-")}</span>
+                        </div>
+                        <span class="${badgeClass}">
+                            <span>${badgeIcon}</span>
+                            <span>${escapeHtml(badgeLabel)}</span>
+                        </span>
+                    </div>
+                    <div class="m-name">${escapeHtml(row[2] || "अनाम")}</div>
+                    <div class="m-school">
+                        <span>🏫</span>
+                        <span>${escapeHtml(row[8] || "विद्यालय दर्ज नहीं")}</span>
+                    </div>
+                    <div class="m-tags">
+                        <span class="m-tag">🏢 ${escapeHtml(row[7] || "-")}</span>
+                        <span class="m-tag">📍 ${escapeHtml(row[6] || "-")}</span>
+                        <span class="m-tag">🏛️ ${escapeHtml(row[5] || "-")}</span>
+                    </div>
+                `;
+            fragmentCards.appendChild(card);
+          });
+
+          tableBody.appendChild(fragmentTable);
+          cardsContainer.appendChild(fragmentCards);
+
+          pdfBtn.disabled = false;
+          csvBtn.disabled = false;
         } catch (error) {
-            console.error("Error fetching data from multiple sources:", error);
-            tableBody.innerHTML = `<tr><td colspan="8">डेटा लोड करने में त्रुटि हुई। कृपया नेटवर्क या यूआरएल जांचें।</td></tr>`;
+          console.error("Error fetching data:", error);
+          const errHtml = `
+                <div class="empty-state" style="color: #b91c1c;">
+                    <div class="empty-icon">⚠️</div>
+                    <p><strong>डेटा लोड करने में त्रुटि हुई!</strong> कृपया इंटरनेट कनेक्शन या यूआरएल जांचें।</p>
+                </div>
+            `;
+          tableBody.innerHTML = `<tr><td colspan="8">${errHtml}</td></tr>`;
+          cardsContainer.innerHTML = errHtml;
         }
-    }
+      }
 
-    function generateBlockSummaryFromSeparateSources(donorData, nonDonorData) {
+      function generateBlockSummaryFromSeparateSources(
+        donorData,
+        nonDonorData,
+      ) {
         const summaryTableBody = document.getElementById("summaryTableBody");
+        const summaryCard = document.getElementById("summaryCard");
+        const summaryTable = document.getElementById("summaryTable");
         summaryTableBody.innerHTML = "";
 
         let blockMap = {};
 
-        // 1. URL 1 से ब्लॉक-वाइज Donor गिनना
-        donorData.forEach(row => {
-            let block = row[7] || "Other";
-            let status = (row[9] || "").toString().trim().toUpperCase();
+        donorData.forEach((row) => {
+          let block = row[7] || "Other";
+          let status = (row[9] || "").toString().trim().toUpperCase();
 
-            if (!blockMap[block]) {
-                blockMap[block] = { non_donor: 0, total_sahyog: 0, total_reg: 0 };
-            }
+          if (!blockMap[block]) {
+            blockMap[block] = { non_donor: 0, total_sahyog: 0, total_reg: 0 };
+          }
 
-            if (status !== "" && status !== "NON_DONOR") {
-                blockMap[block].total_sahyog++;
-                blockMap[block].total_reg++;
-            }
+          if (status !== "" && status !== "NON_DONOR") {
+            blockMap[block].total_sahyog++;
+            blockMap[block].total_reg++;
+          }
         });
 
-        // 2. URL 2 से ब्लॉक-वाइज Non-Donor गिनना
-        nonDonorData.forEach(row => {
-            let block = row[7] || "Other";
-            let status = (row[9] || "").toString().trim().toUpperCase();
+        nonDonorData.forEach((row) => {
+          let block = row[7] || "Other";
+          let status = (row[9] || "").toString().trim().toUpperCase();
 
-            if (!blockMap[block]) {
-                blockMap[block] = { non_donor: 0, total_sahyog: 0, total_reg: 0 };
-            }
+          if (!blockMap[block]) {
+            blockMap[block] = { non_donor: 0, total_sahyog: 0, total_reg: 0 };
+          }
 
-            if (status === "NON_DONOR") {
-                blockMap[block].non_donor++;
-                blockMap[block].total_reg++;
-            }
+          if (status === "NON_DONOR") {
+            blockMap[block].non_donor++;
+            blockMap[block].total_reg++;
+          }
         });
 
         let sortedBlocks = Object.keys(blockMap).sort((a, b) => {
-            return blockMap[b].total_sahyog - blockMap[a].total_sahyog;
+          return blockMap[b].total_sahyog - blockMap[a].total_sahyog;
         });
 
         let grandNonDonor = 0;
         let grandSahyog = 0;
         let grandTotalReg = 0;
 
-        sortedBlocks.forEach(block => {
-            let nd = blockMap[block].non_donor;
-            let ts = blockMap[block].total_sahyog;
-            let trCount = blockMap[block].total_reg;
+        sortedBlocks.forEach((block) => {
+          let nd = blockMap[block].non_donor;
+          let ts = blockMap[block].total_sahyog;
+          let trCount = blockMap[block].total_reg;
 
-            grandNonDonor += nd;
-            grandSahyog += ts;
-            grandTotalReg += trCount;
+          grandNonDonor += nd;
+          grandSahyog += ts;
+          grandTotalReg += trCount;
 
-            let tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td class="text-left"><strong>${block}</strong></td>
-                <td>${nd}</td>
-                <td><strong>${ts}</strong></td>
-                <td><strong>${trCount}</strong></td>
+          let tr = document.createElement("tr");
+          tr.innerHTML = `
+                <td class="text-left"><strong>${escapeHtml(block)}</strong></td>
+                <td><span class="badge badge-non-donor">${nd.toLocaleString("en-IN")}</span></td>
+                <td><span class="badge badge-donor">${ts.toLocaleString("en-IN")}</span></td>
+                <td><strong style="color: #0f172a;">${trCount.toLocaleString("en-IN")}</strong></td>
             `;
-            summaryTableBody.appendChild(tr);
+          summaryTableBody.appendChild(tr);
         });
 
         let totalTr = document.createElement("tr");
-        totalTr.style.fontWeight = "bold";
-        totalTr.style.backgroundColor = "#1565c0"; 
-        totalTr.style.color = "white"; 
+        totalTr.className = "total-row";
         totalTr.innerHTML = `
-            <td class="text-left">Total</td>
-            <td>${grandNonDonor}</td>
-            <td>${grandSahyog}</td>
-            <td>${grandTotalReg}</td>
+            <td class="text-left"><strong>कुल योग</strong></td>
+            <td><strong>${grandNonDonor.toLocaleString("en-IN")}</strong></td>
+            <td><strong>${grandSahyog.toLocaleString("en-IN")}</strong></td>
+            <td><strong>${grandTotalReg.toLocaleString("en-IN")}</strong></td>
         `;
         summaryTableBody.appendChild(totalTr);
 
-        document.getElementById("summaryTable").style.display = "table";
-    }
+        summaryCard.style.display = "block";
+        summaryTable.style.display = "table";
+      }
 
-    function downloadCSV() {
+      function downloadCSV() {
         if (!currentFilteredData || currentFilteredData.length === 0) return;
 
         let csvRows = [];
-        let headers = ["S.No.", "Registration No.", "Name", "Division", "District", "Block", "School", "Sahyog Status"];
+        let headers = [
+          "S.No.",
+          "Registration No.",
+          "Name",
+          "Division",
+          "District",
+          "Block",
+          "School",
+          "Sahyog Status",
+        ];
         csvRows.push(headers.join(","));
 
         currentFilteredData.forEach((row, index) => {
-            let dataRow = [
-                index + 1,
-                `"${row[1] || ''}"`,
-                `"${row[2] || ''}"`,
-                `"${row[5] || ''}"`,
-                `"${row[6] || ''}"`,
-                `"${row[7] || ''}"`,
-                `"${row[8] || ''}"`,
-                `"${row[9] || ''}"`
-            ];
-            csvRows.push(dataRow.join(","));
+          let clean = (val) => `"${String(val || "").replace(/"/g, '""')}"`;
+          let dataRow = [
+            index + 1,
+            clean(row[1]),
+            clean(row[2]),
+            clean(row[5]),
+            clean(row[6]),
+            clean(row[7]),
+            clean(row[8]),
+            clean(row[9]),
+          ];
+          csvRows.push(dataRow.join(","));
         });
 
-        let csvString = csvRows.join("\n");
-        let blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
+        let csvString = csvRows.join("\r\n");
+        let blob = new Blob(["\uFEFF" + csvString], {
+          type: "text/csv;charset=utf-8;",
+        });
         let url = URL.createObjectURL(blob);
-        let a = document.createElement('a');
+        let a = document.createElement("a");
         a.href = url;
-        a.download = `PMUMS_Report_${document.getElementById("displayBlock").textContent}.csv`;
+        const blockName =
+          document.getElementById("districtSelect").value || "Report";
+        a.download = `PMUMS_Report_${blockName}.csv`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-    }
-</script>
-
-</body>
+        URL.revokeObjectURL(url);
+      }
+    </script>
+  </body>
 </html>
