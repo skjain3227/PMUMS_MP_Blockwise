@@ -152,12 +152,13 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 8px;
-        align-items: end;
+        align-items: stretch;
       }
       .filter-group {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        align-items: center;
+        gap: 8px;
       }
       .filter-group label {
         font-size: 11.5px;
@@ -166,9 +167,11 @@
         display: flex;
         align-items: center;
         gap: 4px;
+        white-space: nowrap;
       }
       .filter-select {
         width: 100%;
+        min-width: 0;
         padding: 6px 8px;
         font-size: 13px;
         font-weight: 600;
@@ -262,8 +265,27 @@
         border: 1px solid var(--border-color);
         border-radius: var(--radius-md);
         padding: 6px 8px;
-        margin-bottom: 6px;
+        margin-bottom: 0;
         box-shadow: var(--shadow-sm);
+      }
+      .summary-metrics-layout {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: stretch;
+        gap: 6px;
+        margin-bottom: 6px;
+      }
+      .summary-metrics-layout .summary-table-card {
+        margin-bottom: 0;
+      }
+      .summary-table-card {
+        grid-column: 1;
+      }
+      .mp-metrics-card {
+        grid-column: 2;
+      }
+      .district-metrics-card {
+        grid-column: 3;
       }
       .compact-metric-header {
         display: flex;
@@ -301,6 +323,10 @@
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 5px;
+      }
+      .metrics-column-grid {
+        grid-template-columns: minmax(0, 1fr);
+        margin-bottom: 6px;
       }
       .compact-metric-pill {
         display: flex;
@@ -400,6 +426,18 @@
         overflow: hidden;
         box-shadow: var(--shadow-sm);
         margin-bottom: 6px;
+      }
+      .summary-table-card {
+        width: fit-content;
+        max-width: 100%;
+      }
+      .summary-table-card .table-responsive {
+        width: fit-content;
+        max-width: 100%;
+      }
+      #summaryTable {
+        width: max-content;
+        max-width: 100%;
       }
       .table-header-bar {
         display: flex;
@@ -835,7 +873,16 @@
 
         .district-metrics-compact {
           padding: 4px 6px;
+        }
+        .summary-metrics-layout {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 4px;
           margin-bottom: 4px;
+        }
+        .summary-table-card,
+        .mp-metrics-card,
+        .district-metrics-card {
+          grid-column: 1;
         }
         .compact-metric-header {
           margin-bottom: 3px;
@@ -1099,93 +1146,100 @@
         </div>
       </div>
 
-      <!-- Metrics Section (State & District - Unified Compact Bar) -->
-      <section class="district-metrics-compact">
-        <!-- 1. State Level Metrics (Without Filter) -->
-        <div class="compact-metric-header">
-          <div class="compact-metric-title">
-            <span>🏛️ समग्र म.प्र. आंकड़े (बिना फ़िल्टर):</span>
-            <span class="section-badge badge-mp">MP State Total</span>
-          </div>
-        </div>
-        <div class="compact-metric-grid" style="margin-bottom: 6px">
-          <div class="compact-metric-pill card-mp-reg">
-            <div class="pill-left">
-              <span class="pill-icon">👥</span>
-              <span class="pill-label">Total Reg. (MP)</span>
+      <div class="summary-metrics-layout">
+        <!-- Summary Table Card -->
+        <div
+          class="table-card summary-table-card"
+          id="summaryCard"
+          style="display: none"
+        >
+          <div class="table-header-bar">
+            <div class="table-title">
+              <span>📊 ब्लॉक-वार सारांश (Block Summary)</span>
             </div>
-            <span class="pill-value" id="totalRegMPDisplay">0</span>
           </div>
-          <div class="compact-metric-pill card-mp-donor">
-            <div class="pill-left">
-              <span class="pill-icon">🤝</span>
-              <span class="pill-label">Total Donor (MP)</span>
-            </div>
-            <span class="pill-value" id="totalDonorMPDisplay">0</span>
-          </div>
-          <div class="compact-metric-pill card-mp-nondonor">
-            <div class="pill-left">
-              <span class="pill-icon">⚠️</span>
-              <span class="pill-label">Total Non-Donor (MP)</span>
-            </div>
-            <span class="pill-value" id="totalNonDonorMPDisplay">0</span>
+          <div class="table-responsive">
+            <table id="summaryTable" style="display: none">
+              <thead>
+                <tr>
+                  <th class="text-left">ब्लॉक (BLOCK)</th>
+                  <th>असहयोग</th>
+                  <th>सहयोग</th>
+                  <th>कुल</th>
+                </tr>
+              </thead>
+              <tbody id="summaryTableBody"></tbody>
+            </table>
           </div>
         </div>
 
-        <!-- 2. District Level Metrics (Filtered by District) -->
-        <div class="compact-metric-header">
-          <div class="compact-metric-title">
-            <span>📍 जिला स्तरीय आंकड़े:</span>
-            <span class="section-badge badge-district" id="kpiDistrictBadge"
-              >चयनित जिला</span
-            >
-          </div>
-        </div>
-        <div class="compact-metric-grid">
-          <div class="compact-metric-pill card-dist-reg">
-            <div class="pill-left">
-              <span class="pill-icon">📋</span>
-              <span class="pill-label">District Reg.</span>
+        <!-- MP State Metrics -->
+        <section class="district-metrics-compact mp-metrics-card">
+          <div class="compact-metric-header">
+            <div class="compact-metric-title">
+              <span>🏛️ समग्र म.प्र. आंकड़े (बिना फ़िल्टर):</span>
+              <span class="section-badge badge-mp">MP State Total</span>
             </div>
-            <span class="pill-value" id="totalCountDisplay">0</span>
           </div>
-          <div class="compact-metric-pill card-dist-donor">
-            <div class="pill-left">
-              <span class="pill-icon">💚</span>
-              <span class="pill-label">District Donor</span>
+          <div class="compact-metric-grid metrics-column-grid">
+            <div class="compact-metric-pill card-mp-reg">
+              <div class="pill-left">
+                <span class="pill-icon">👥</span>
+                <span class="pill-label">Total Reg. (MP)</span>
+              </div>
+              <span class="pill-value" id="totalRegMPDisplay">0</span>
             </div>
-            <span class="pill-value" id="totalDonorDistrictDisplay">0</span>
-          </div>
-          <div class="compact-metric-pill card-dist-nondonor">
-            <div class="pill-left">
-              <span class="pill-icon">🔴</span>
-              <span class="pill-label">District Non-Donor</span>
+            <div class="compact-metric-pill card-mp-donor">
+              <div class="pill-left">
+                <span class="pill-icon">🤝</span>
+                <span class="pill-label">Total Donor (MP)</span>
+              </div>
+              <span class="pill-value" id="totalDonorMPDisplay">0</span>
             </div>
-            <span class="pill-value" id="totalNonDonorDistrictDisplay">0</span>
+            <div class="compact-metric-pill card-mp-nondonor">
+              <div class="pill-left">
+                <span class="pill-icon">⚠️</span>
+                <span class="pill-label">Total Non-Donor (MP)</span>
+              </div>
+              <span class="pill-value" id="totalNonDonorMPDisplay">0</span>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Summary Table Card -->
-      <div class="table-card" id="summaryCard" style="display: none">
-        <div class="table-header-bar">
-          <div class="table-title">
-            <span>📊 ब्लॉक-वार सारांश (Block Summary)</span>
+        <!-- Selected District Metrics -->
+        <section class="district-metrics-compact district-metrics-card">
+          <div class="compact-metric-header">
+            <div class="compact-metric-title">
+              <span>📍 जिला स्तरीय आंकड़े:</span>
+              <span class="section-badge badge-district" id="kpiDistrictBadge"
+                >चयनित जिला</span
+              >
+            </div>
           </div>
-        </div>
-        <div class="table-responsive">
-          <table id="summaryTable" style="display: none">
-            <thead>
-              <tr>
-                <th class="text-left" style="width: 40%">ब्लॉक (BLOCK)</th>
-                <th style="width: 20%">असहयोग</th>
-                <th style="width: 20%">सहयोग</th>
-                <th style="width: 20%">कुल</th>
-              </tr>
-            </thead>
-            <tbody id="summaryTableBody"></tbody>
-          </table>
-        </div>
+          <div class="compact-metric-grid metrics-column-grid">
+            <div class="compact-metric-pill card-dist-reg">
+              <div class="pill-left">
+                <span class="pill-icon">📋</span>
+                <span class="pill-label">District Reg.</span>
+              </div>
+              <span class="pill-value" id="totalCountDisplay">0</span>
+            </div>
+            <div class="compact-metric-pill card-dist-donor">
+              <div class="pill-left">
+                <span class="pill-icon">💚</span>
+                <span class="pill-label">District Donor</span>
+              </div>
+              <span class="pill-value" id="totalDonorDistrictDisplay">0</span>
+            </div>
+            <div class="compact-metric-pill card-dist-nondonor">
+              <div class="pill-left">
+                <span class="pill-icon">🔴</span>
+                <span class="pill-label">District Non-Donor</span>
+              </div>
+              <span class="pill-value" id="totalNonDonorDistrictDisplay">0</span>
+            </div>
+          </div>
+        </section>
       </div>
 
       <!-- Detailed List Card -->
@@ -1673,7 +1727,8 @@
         document.getElementById("totalNonDonorDistrictDisplay").textContent =
           "0";
         document.getElementById("summaryTable").style.display = "none";
-        document.getElementById("summaryCard").style.display = "none";
+        const summaryCard = document.getElementById("summaryCard");
+        summaryCard.style.display = "none";
         document.getElementById("cardsContainer").innerHTML = "";
         document.getElementById("tableSearchInput").value = "";
         document.getElementById("searchMatchCount").textContent = "";
