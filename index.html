@@ -473,36 +473,6 @@
         border: 1px solid #cbd5e1;
       }
 
-      /* View Mode Toggle Buttons */
-      .view-toggle-group {
-        display: inline-flex;
-        background: #f1f5f9;
-        padding: 2px;
-        border-radius: var(--radius-sm);
-        border: 1px solid #cbd5e1;
-        gap: 2px;
-      }
-      .view-btn {
-        border: none;
-        background: transparent;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-size: 11.5px;
-        font-weight: 700;
-        color: #475569;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        transition: all 0.2s ease;
-        font-family: inherit;
-      }
-      .view-btn.active {
-        background: white;
-        color: #1e40af;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-      }
-
       /* Live Search Box */
       .search-box-container {
         position: relative;
@@ -616,86 +586,6 @@
       }
       tr.row-non-donor:hover {
         background-color: #ffe4e6 !important;
-      }
-
-      /* Mobile Card Grid */
-      .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 5px;
-        padding: 6px;
-        background: #f8fafc;
-      }
-      .member-card {
-        background: #ffffff;
-        border-radius: var(--radius-sm);
-        padding: 6px 8px;
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-sm);
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-        position: relative;
-      }
-      .member-card-donor {
-        border-left: 3px solid #10b981;
-      }
-      .member-card-non-donor {
-        border-left: 3px solid #ef4444;
-        background: #fffafa;
-      }
-      .m-card-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 6px;
-      }
-      .m-index-reg {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        font-size: 11px;
-        font-weight: 700;
-        color: #475569;
-      }
-      .m-reg-badge {
-        font-family: monospace;
-        background: #eff6ff;
-        color: #1d4ed8;
-        padding: 1px 6px;
-        border-radius: 3px;
-        border: 1px solid #bfdbfe;
-        font-size: 11.5px;
-      }
-      .m-name {
-        font-size: 13.5px;
-        font-weight: 800;
-        color: #0f172a;
-        line-height: 1.2;
-      }
-      .m-school {
-        font-size: 11.5px;
-        color: #475569;
-        display: flex;
-        align-items: flex-start;
-        gap: 4px;
-        line-height: 1.2;
-      }
-      .m-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        margin-top: 2px;
-        padding-top: 3px;
-        border-top: 1px dashed #e2e8f0;
-        font-size: 10.5px;
-      }
-      .m-tag {
-        background: #f1f5f9;
-        color: #334155;
-        padding: 1px 6px;
-        border-radius: 3px;
-        font-weight: 600;
       }
 
       /* Summary Table Styling */
@@ -944,11 +834,6 @@
           font-size: 11px;
         }
 
-        .cards-grid {
-          grid-template-columns: 1fr;
-          padding: 4px;
-          gap: 4px;
-        }
       }
 
       @media (max-width: 480px) {
@@ -1006,7 +891,6 @@
         .search-box-container,
         .portal-footer,
         .action-row,
-        .view-toggle-group,
         .mobile-scroll-hint,
         .scroll-top-btn {
           display: none !important;
@@ -1024,9 +908,6 @@
         }
         #tableWrapper {
           display: block !important;
-        }
-        #cardsContainer {
-          display: none !important;
         }
         th,
         td {
@@ -1119,12 +1000,20 @@
           </button>
           <div class="action-sub-row">
             <button
-              id="pdfBtn"
-              class="btn btn-danger"
+              id="printBtn"
+              class="btn btn-primary"
               onclick="window.print()"
               disabled
             >
-              <span>🖨️</span> प्रिंट / PDF
+              <span>🖨️</span> प्रिंट
+            </button>
+            <button
+              id="pdfBtn"
+              class="btn btn-danger"
+              onclick="downloadPDF()"
+              disabled
+            >
+              <span>📄</span> PDF डाउनलोड
             </button>
             <button
               id="csvBtn"
@@ -1250,27 +1139,6 @@
               <span>📋 विस्तृत सूची</span>
               <span id="searchMatchCount" class="count-pill"></span>
             </div>
-            <!-- View Toggle Buttons (Table vs Card) -->
-            <div class="view-toggle-group">
-              <button
-                type="button"
-                id="btnViewTable"
-                class="view-btn active"
-                onclick="setViewMode('table')"
-                title="तालिका दृश्य"
-              >
-                <span>📋</span> <span class="view-btn-text">टेबल</span>
-              </button>
-              <button
-                type="button"
-                id="btnViewCard"
-                class="view-btn"
-                onclick="setViewMode('card')"
-                title="मोबाइल कार्ड दृश्य"
-              >
-                <span>📱</span> <span class="view-btn-text">कार्ड्स</span>
-              </button>
-            </div>
           </div>
 
           <div class="search-box-container">
@@ -1296,14 +1164,14 @@
                 <tr>
                   <th style="width: 45px">क्र.</th>
                   <th style="width: 120px">Registration No.</th>
-                  <th class="text-left" style="min-width: 160px">नाम (Name)</th>
-                  <th>संभाग</th>
-                  <th>जिला</th>
-                  <th>ब्लॉक</th>
+                  <th class="text-left" style="min-width: 160px">Name</th>
+                  <th>Division</th>
+                  <th>District</th>
+                  <th>Block</th>
                   <th class="text-left" style="min-width: 180px">
-                    विद्यालय (School)
+                    School
                   </th>
-                  <th style="width: 105px">स्थिति</th>
+                  <th style="width: 105px">Status</th>
                 </tr>
               </thead>
               <tbody id="dataTableBody">
@@ -1320,9 +1188,6 @@
             </table>
           </div>
         </div>
-
-        <!-- Mobile Card View -->
-        <div id="cardsContainer" class="cards-grid" style="display: none"></div>
       </div>
 
       <!-- Footer -->
@@ -1671,7 +1536,53 @@
       };
 
       let currentFilteredData = [];
-      let currentViewMode = window.innerWidth <= 768 ? "card" : "table";
+      let cachedDataSources = null;
+      let dataSourcesPromise = null;
+      let cachedDataSourcesAt = 0;
+      const DATA_CACHE_TTL_MS = 60 * 1000;
+      const DATA_SOURCE_URLS = [
+        "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec",
+        "https://script.google.com/macros/s/AKfycbzsa2KMFIcEALPqJTePS5e1UDLmtLagiNHBwylbs64lM2_In1t1blzd8rW6OKamtxg/exec",
+      ];
+
+      function getDataSources() {
+        if (
+          cachedDataSources &&
+          Date.now() - cachedDataSourcesAt < DATA_CACHE_TTL_MS
+        ) {
+          return Promise.resolve(cachedDataSources);
+        }
+
+        if (!dataSourcesPromise) {
+          dataSourcesPromise = Promise.all(
+            DATA_SOURCE_URLS.map(async (url) => {
+              const response = await fetch(url);
+              if (!response.ok) {
+                throw new Error(`Data source request failed: ${response.status}`);
+              }
+              const data = await response.json();
+              if (!Array.isArray(data)) {
+                throw new Error("Data source returned an invalid response.");
+              }
+              return data;
+            }),
+          )
+            .then(([donor, nonDonor]) => {
+              cachedDataSources = { donor, nonDonor };
+              cachedDataSourcesAt = Date.now();
+              return cachedDataSources;
+            })
+            .catch((error) => {
+              dataSourcesPromise = null;
+              throw error;
+            })
+            .finally(() => {
+              dataSourcesPromise = null;
+            });
+        }
+
+        return dataSourcesPromise;
+      }
 
       window.onload = function () {
         const divisionSelect = document.getElementById("divisionSelect");
@@ -1682,7 +1593,6 @@
           divisionSelect.appendChild(option);
         }
 
-        updateViewModeUI();
       };
 
       // Scroll listener for floating action button (FAB)
@@ -1692,31 +1602,6 @@
           btn.classList.toggle("visible", window.scrollY > 250);
         }
       });
-
-      function setViewMode(mode) {
-        currentViewMode = mode;
-        updateViewModeUI();
-      }
-
-      function updateViewModeUI() {
-        const tableWrapper = document.getElementById("tableWrapper");
-        const cardsContainer = document.getElementById("cardsContainer");
-        const btnTable = document.getElementById("btnViewTable");
-        const btnCard = document.getElementById("btnViewCard");
-
-        if (currentViewMode === "card") {
-          tableWrapper.style.display = "none";
-          cardsContainer.style.display = "grid";
-          btnCard.classList.add("active");
-          btnTable.classList.remove("active");
-        } else {
-          tableWrapper.style.display = "block";
-          cardsContainer.style.display = "none";
-          btnTable.classList.add("active");
-          btnCard.classList.remove("active");
-        }
-        filterTableSearch();
-      }
 
       function resetAllMetrics() {
         document.getElementById("totalRegMPDisplay").textContent = "0";
@@ -1729,7 +1614,10 @@
         document.getElementById("summaryTable").style.display = "none";
         const summaryCard = document.getElementById("summaryCard");
         summaryCard.style.display = "none";
+<<<<<<< HEAD
+=======
         document.getElementById("cardsContainer").innerHTML = "";
+>>>>>>> 08418bf6bba290ef9f24d9748c554800bcca56db
         document.getElementById("tableSearchInput").value = "";
         document.getElementById("searchMatchCount").textContent = "";
       }
@@ -1746,6 +1634,7 @@
         districtSelect.disabled = true;
         blockSelect.disabled = true;
         document.getElementById("submitBtn").disabled = true;
+        document.getElementById("printBtn").disabled = true;
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
 
@@ -1774,6 +1663,7 @@
         blockSelect.innerHTML = '<option value="">-- ब्लॉक चुनें --</option>';
         blockSelect.disabled = true;
         document.getElementById("submitBtn").disabled = true;
+        document.getElementById("printBtn").disabled = true;
         document.getElementById("pdfBtn").disabled = true;
         document.getElementById("csvBtn").disabled = true;
 
@@ -1845,24 +1735,10 @@
           });
         }
 
-        // 2. Filter Mobile Cards
-        const cards = document.querySelectorAll("#cardsContainer .member-card");
-        let cardMatch = 0;
-        cards.forEach((card) => {
-          const text = card.textContent.toLowerCase();
-          if (query === "" || text.includes(query)) {
-            card.style.display = "";
-            cardMatch++;
-          } else {
-            card.style.display = "none";
-          }
-        });
-
-        const activeCount = currentViewMode === "card" ? cardMatch : tableMatch;
         const matchPill = document.getElementById("searchMatchCount");
         if (matchPill) {
           matchPill.textContent = query
-            ? `${activeCount} मिले`
+            ? `${tableMatch} मिले`
             : `${currentFilteredData.length} रिकॉर्ड`;
         }
       }
@@ -1872,7 +1748,7 @@
           document.getElementById("districtSelect").value;
         const selectedBlock = document.getElementById("blockSelect").value;
         const tableBody = document.getElementById("dataTableBody");
-        const cardsContainer = document.getElementById("cardsContainer");
+        const printBtn = document.getElementById("printBtn");
         const pdfBtn = document.getElementById("pdfBtn");
         const csvBtn = document.getElementById("csvBtn");
         const totalRegMPDisplay = document.getElementById("totalRegMPDisplay");
@@ -1903,9 +1779,10 @@
             </div>
         `;
 
+        currentFilteredData = [];
         tableBody.innerHTML = `<tr><td colspan="8">${loadingHtml}</td></tr>`;
-        cardsContainer.innerHTML = loadingHtml;
 
+        printBtn.disabled = true;
         pdfBtn.disabled = true;
         csvBtn.disabled = true;
         totalRegMPDisplay.textContent = "0";
@@ -1919,23 +1796,10 @@
         document.getElementById("tableSearchInput").value = "";
         document.getElementById("searchMatchCount").textContent = "";
 
-        const url1 =
-          "https://script.google.com/macros/s/AKfycbxHKnS2AD4P4UOQaEpJzvsmYXp_98BMiNzmDLcL6ME-QrOPvWtVLrG40z-8lD8i6m2J/exec";
-        const url2 =
-          "https://script.google.com/macros/s/AKfycbzsa2KMFIcEALPqJTePS5e1UDLmtLagiNHBwylbs64lM2_In1t1blzd8rW6OKamtxg/exec";
-
         try {
-          let responses = await Promise.all([
-            fetch(url1)
-              .then((res) => res.json())
-              .catch(() => []),
-            fetch(url2)
-              .then((res) => res.json())
-              .catch(() => []),
-          ]);
-
-          let dataUrl1 = responses[0]; // Donor Source
-          let dataUrl2 = responses[1]; // Non-Donor Source
+          const dataSources = await getDataSources();
+          let dataUrl1 = dataSources.donor;
+          let dataUrl2 = dataSources.nonDonor;
 
           // 1. समग्र म.प्र. (बिना फ़िल्टर) कुल Donor, Non-Donor एवं Registration
           let allDonorCount = dataUrl1.filter((row) => {
@@ -1999,12 +1863,8 @@
             districtFilteredUrl2,
           );
 
-          let combinedData = [...dataUrl1, ...dataUrl2];
-          let districtFiltered = combinedData.filter(
-            (row) =>
-              row[6] &&
-              row[6].toString().trim().toLowerCase() ===
-                selectedDistrict.trim().toLowerCase(),
+          let districtFiltered = districtFilteredUrl1.concat(
+            districtFilteredUrl2,
           );
 
           let filtered = [];
@@ -2034,9 +1894,6 @@
           totalCountDisplay.textContent =
             districtFiltered.length.toLocaleString("en-IN");
 
-          tableBody.innerHTML = "";
-          cardsContainer.innerHTML = "";
-
           if (!currentFilteredData || currentFilteredData.length === 0) {
             const emptyMsg = `
                     <div class="empty-state">
@@ -2044,32 +1901,49 @@
                         <p>इस चयन के लिए कोई डेटा उपलब्ध नहीं है।</p>
                     </div>
                 `;
-            tableBody.innerHTML = `<tr><td colspan="8">${emptyMsg}</td></tr>`;
-            cardsContainer.innerHTML = emptyMsg;
-            return;
+                tableBody.innerHTML = `<tr><td colspan="8">${emptyMsg}</td></tr>`;
+                return;
           }
 
           document.getElementById("searchMatchCount").textContent =
             `${currentFilteredData.length} रिकॉर्ड`;
 
-          const fragmentTable = document.createDocumentFragment();
-          const fragmentCards = document.createDocumentFragment();
+          renderCurrentData();
 
-          currentFilteredData.forEach((row, index) => {
-            let statusVal = (row[9] || "").toString().trim();
-            let isNonDonor = statusVal.toUpperCase() === "NON_DONOR";
-            let badgeClass = isNonDonor
-              ? "badge badge-non-donor"
-              : "badge badge-donor";
-            let badgeIcon = isNonDonor ? "⚠️" : "✅";
-            let badgeLabel = isNonDonor ? "असहयोग" : statusVal || "सहयोग";
+          printBtn.disabled = false;
+          pdfBtn.disabled = false;
+          csvBtn.disabled = false;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          const errHtml = `
+                <div class="empty-state" style="color: #b91c1c;">
+                    <div class="empty-icon">⚠️</div>
+                    <p><strong>डेटा लोड करने में त्रुटि हुई!</strong> कृपया इंटरनेट कनेक्शन या यूआरएल जांचें।</p>
+                </div>
+            `;
+            tableBody.innerHTML = `<tr><td colspan="8">${errHtml}</td></tr>`;
+        }
+      }
 
-            // Table Row
-            let tr = document.createElement("tr");
-            if (isNonDonor) {
-              tr.className = "row-non-donor";
-            }
-            tr.innerHTML = `
+      function renderCurrentData() {
+        const tableBody = document.getElementById("dataTableBody");
+        tableBody.innerHTML = "";
+
+        const fragment = document.createDocumentFragment();
+        currentFilteredData.forEach((row, index) => {
+          let statusVal = (row[9] || "").toString().trim();
+          let isNonDonor = statusVal.toUpperCase() === "NON_DONOR";
+          let badgeClass = isNonDonor
+            ? "badge badge-non-donor"
+            : "badge badge-donor";
+          let badgeIcon = isNonDonor ? "⚠️" : "✅";
+          let badgeLabel = isNonDonor ? "असहयोग" : statusVal || "सहयोग";
+
+          let tr = document.createElement("tr");
+          if (isNonDonor) {
+            tr.className = "row-non-donor";
+          }
+          tr.innerHTML = `
                     <td><strong>${index + 1}</strong></td>
                     <td style="font-family: monospace; font-weight: 700; color: #1e3a8a;">${escapeHtml(row[1] || "")}</td>
                     <td class="text-left" style="font-weight: 600; color: #0f172a;">${escapeHtml(row[2] || "")}</td>
@@ -2084,52 +1958,11 @@
                         </span>
                     </td>
                 `;
-            fragmentTable.appendChild(tr);
+          fragment.appendChild(tr);
+        });
 
-            // Mobile Card
-            let card = document.createElement("div");
-            card.className = `member-card ${isNonDonor ? "member-card-non-donor" : "member-card-donor"}`;
-            card.innerHTML = `
-                    <div class="m-card-top">
-                        <div class="m-index-reg">
-                            <span>#${index + 1}</span>
-                            <span class="m-reg-badge">${escapeHtml(row[1] || "-")}</span>
-                        </div>
-                        <span class="${badgeClass}">
-                            <span>${badgeIcon}</span>
-                            <span>${escapeHtml(badgeLabel)}</span>
-                        </span>
-                    </div>
-                    <div class="m-name">${escapeHtml(row[2] || "अनाम")}</div>
-                    <div class="m-school">
-                        <span>🏫</span>
-                        <span>${escapeHtml(row[8] || "विद्यालय दर्ज नहीं")}</span>
-                    </div>
-                    <div class="m-tags">
-                        <span class="m-tag">🏢 ${escapeHtml(row[7] || "-")}</span>
-                        <span class="m-tag">📍 ${escapeHtml(row[6] || "-")}</span>
-                        <span class="m-tag">🏛️ ${escapeHtml(row[5] || "-")}</span>
-                    </div>
-                `;
-            fragmentCards.appendChild(card);
-          });
-
-          tableBody.appendChild(fragmentTable);
-          cardsContainer.appendChild(fragmentCards);
-
-          pdfBtn.disabled = false;
-          csvBtn.disabled = false;
-        } catch (error) {
-          console.error("Error fetching data:", error);
-          const errHtml = `
-                <div class="empty-state" style="color: #b91c1c;">
-                    <div class="empty-icon">⚠️</div>
-                    <p><strong>डेटा लोड करने में त्रुटि हुई!</strong> कृपया इंटरनेट कनेक्शन या यूआरएल जांचें।</p>
-                </div>
-            `;
-          tableBody.innerHTML = `<tr><td colspan="8">${errHtml}</td></tr>`;
-          cardsContainer.innerHTML = errHtml;
-        }
+        tableBody.appendChild(fragment);
+        filterTableSearch();
       }
 
       function generateBlockSummaryFromSeparateSources(
@@ -2212,6 +2045,293 @@
         summaryTable.style.display = "table";
       }
 
+      let pdfLibraryPromise = null;
+
+      function loadPdfLibrary() {
+        if (window.html2pdf) return Promise.resolve(window.html2pdf);
+        if (pdfLibraryPromise) return pdfLibraryPromise;
+
+        pdfLibraryPromise = new Promise((resolve, reject) => {
+          const script = document.createElement("script");
+          script.src =
+            "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+          script.onload = () => {
+            if (window.html2pdf) {
+              resolve(window.html2pdf);
+            } else {
+              reject(new Error("PDF library did not initialize."));
+            }
+          };
+          script.onerror = () => reject(new Error("PDF library failed to load."));
+          document.head.appendChild(script);
+        }).catch((error) => {
+          pdfLibraryPromise = null;
+          throw error;
+        });
+
+        return pdfLibraryPromise;
+      }
+
+      async function downloadPDF() {
+        if (currentFilteredData.length === 0) return;
+
+        const pdfBtn = document.getElementById("pdfBtn");
+        const originalButtonContent = pdfBtn.innerHTML;
+        let report;
+        let reportContainer;
+        pdfBtn.disabled = true;
+        pdfBtn.innerHTML = "<span>⏳</span> PDF बन रहा है...";
+
+        try {
+          const html2pdf = await loadPdfLibrary();
+          if (document.fonts && document.fonts.ready) {
+            await document.fonts.ready;
+            const pdfFontSample =
+              "PMUMS शिक्षक संघ मध्य प्रदेश जिला ब्लॉक कुल रिकॉर्ड क्र Registration No नाम संभाग विद्यालय स्थिति असहयोग सहयोग";
+            await document.fonts.load(
+              '400 10px "Noto Sans Devanagari"',
+              pdfFontSample,
+            );
+          }
+
+          reportContainer = document.createElement("div");
+          reportContainer.id = "pdfReportContainer";
+          reportContainer.style.cssText =
+            "position:fixed;left:0;top:0;z-index:2147483647;opacity:0;pointer-events:none;";
+
+          report = document.createElement("div");
+          report.style.cssText =
+            "position:static;width:733px;padding:0;background:#fff;color:#0f172a;font-family:'Noto Sans Devanagari',sans-serif;font-weight:400;";
+          reportContainer.appendChild(report);
+          document.body.appendChild(reportContainer);
+
+          const columnWidths = [
+            "5%",
+            "12%",
+            "16%",
+            "9%",
+            "9%",
+            "10%",
+            "28%",
+            "11%",
+          ];
+          const headers = [
+            "S.No.",
+            "PMUMS ID",
+            "Name",
+            "Division",
+            "District",
+            "Block",
+            "School",
+            "Status",
+          ];
+          const districtName =
+            document.getElementById("districtSelect").value || "Report";
+          const blockName =
+            document.getElementById("blockSelect").value || "All_Blocks";
+          const blockLabel =
+            document.getElementById("blockSelect").selectedOptions[0]
+              .textContent;
+          const maxPageHeight = ((297 - 16) * 96) / 25.4;
+          const pdfTextSegmenter =
+            typeof Intl.Segmenter === "function"
+              ? new Intl.Segmenter("hi", { granularity: "grapheme" })
+              : null;
+
+          function truncateSchoolName(value) {
+            const schoolName = String(value || "");
+            const characters = pdfTextSegmenter
+              ? Array.from(
+                  pdfTextSegmenter.segment(schoolName),
+                  ({ segment }) => segment,
+                )
+              : Array.from(schoolName);
+
+            if (characters.length <= 30) return schoolName;
+
+            const shortened = characters.slice(0, 30);
+            while (
+              shortened.length > 0 &&
+              /[\p{M}\u200d\u200c]$/u.test(shortened[shortened.length - 1])
+            ) {
+              shortened.pop();
+            }
+            return `${shortened.join("")}…`;
+          }
+
+          function createPdfPage(pageNumber) {
+            const page = document.createElement("section");
+            page.className =
+              pageNumber === 1 ? "pdf-page" : "pdf-page pdf-page-next";
+            page.style.cssText =
+              "width:733px;box-sizing:border-box;background:#fff;color:#0f172a;font-family:'Noto Sans Devanagari',sans-serif;font-weight:400;" +
+              (pageNumber > 1
+                ? "break-before:page;page-break-before:always;"
+                : "");
+
+            const title = document.createElement("h1");
+            title.textContent = "PMUMS शिक्षक संघ, मध्य प्रदेश";
+            title.style.cssText =
+              "margin:0 0 6px;text-align:center;font-family:'Noto Sans Devanagari',sans-serif;font-size:18px;font-weight:400;";
+            page.appendChild(title);
+
+            const subtitle = document.createElement("p");
+            subtitle.textContent =
+              `जिला: ${districtName} | ब्लॉक: ${blockLabel} | कुल रिकॉर्ड: ${currentFilteredData.length}`;
+            subtitle.style.cssText =
+              "margin:0 0 4px;text-align:center;font-family:'Noto Sans Devanagari',sans-serif;font-size:11px;font-weight:400;";
+            page.appendChild(subtitle);
+
+            const pageNumberLabel = document.createElement("p");
+            pageNumberLabel.className = "pdf-page-number";
+            pageNumberLabel.textContent = `पृष्ठ ${pageNumber}`;
+            pageNumberLabel.style.cssText =
+              "margin:0 0 6px;text-align:right;font-family:'Noto Sans Devanagari',sans-serif;font-size:9px;font-weight:400;";
+            page.appendChild(pageNumberLabel);
+
+            const table = document.createElement("table");
+            table.style.cssText =
+              "width:100%;table-layout:fixed;border-collapse:collapse;font-family:'Noto Sans Devanagari',sans-serif;font-size:8px;font-weight:400;";
+            const colgroup = document.createElement("colgroup");
+            columnWidths.forEach((width) => {
+              const column = document.createElement("col");
+              column.style.width = width;
+              colgroup.appendChild(column);
+            });
+            table.appendChild(colgroup);
+
+            const thead = document.createElement("thead");
+            thead.style.display = "table-header-group";
+            const headerRow = document.createElement("tr");
+            headers.forEach((label) => {
+              const cell = document.createElement("th");
+              cell.textContent = label;
+              cell.style.cssText =
+                "border:1px solid #94a3b8;padding:3px;background:#1e3a8a;color:#fff;text-align:center;overflow-wrap:anywhere;word-break:break-word;font-family:'Noto Sans Devanagari',sans-serif;font-size:8px;font-weight:400;";
+              headerRow.appendChild(cell);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            page.appendChild(table);
+            report.appendChild(page);
+            return { page, pageNumberLabel, tbody };
+          }
+
+          function createPdfRow(row, index) {
+            const values = [
+              index + 1,
+              row[1] || "",
+              row[2] || "",
+              row[5] || "",
+              row[6] || "",
+              row[7] || "",
+              truncateSchoolName(row[8]),
+              (row[9] || "").toString().trim().toUpperCase() === "NON_DONOR"
+                ? "असहयोग"
+                : "सहयोग",
+            ];
+            const tr = document.createElement("tr");
+            tr.className = "pdf-row";
+            tr.style.cssText = "break-inside:avoid;page-break-inside:avoid;";
+            values.forEach((value, cellIndex) => {
+              const cell = document.createElement("td");
+              cell.textContent = value;
+              if (cellIndex === 6) {
+                cell.className = "pdf-school-cell";
+              } else if (cellIndex === 7) {
+                cell.className = "pdf-status-cell";
+              }
+              cell.style.cssText =
+                "border:1px solid #cbd5e1;padding:3px;text-align:" +
+                (cellIndex === 2 || cellIndex === 6 ? "left" : "center") +
+                ";box-sizing:border-box;overflow:hidden;overflow-wrap:anywhere;font-family:'Noto Sans Devanagari',sans-serif;font-size:8px;font-weight:400;" +
+                (cellIndex === 6
+                  ? "word-break:break-all;white-space:normal;"
+                  : "word-break:break-word;") +
+                (cellIndex === 7 ? "white-space:nowrap;" : "");
+              tr.appendChild(cell);
+            });
+            return tr;
+          }
+
+          const pages = [];
+          let currentPage = createPdfPage(1);
+          pages.push(currentPage);
+          currentFilteredData.forEach((row, index) => {
+            const tableRow = createPdfRow(row, index);
+            currentPage.tbody.appendChild(tableRow);
+            if (
+              currentPage.page.getBoundingClientRect().height > maxPageHeight &&
+              currentPage.tbody.rows.length > 1
+            ) {
+              currentPage.tbody.removeChild(tableRow);
+              currentPage = createPdfPage(pages.length + 1);
+              pages.push(currentPage);
+              currentPage.tbody.appendChild(tableRow);
+            }
+          });
+          pages.forEach((page, index) => {
+            page.pageNumberLabel.textContent = `पृष्ठ ${index + 1} / ${pages.length}`;
+          });
+
+          const safeFilename = `${districtName}_${blockName}`.replace(
+            /[\\/:*?"<>|]+/g,
+            "_",
+          );
+          await html2pdf()
+            .set({
+              margin: [8, 8, 8, 8],
+              filename: `PMUMS_Report_${safeFilename}.pdf`,
+              image: { type: "jpeg", quality: 0.96 },
+              html2canvas: {
+                scale: 1.5,
+                useCORS: true,
+                onclone: async (clonedDocument) => {
+                  const clonedContainer =
+                    clonedDocument.getElementById("pdfReportContainer");
+                  if (!clonedContainer) {
+                    throw new Error("PDF report container was not cloned.");
+                  }
+                  clonedContainer.style.opacity = "1";
+                  const sample =
+                    "PMUMS शिक्षक संघ मध्य प्रदेश जिला ब्लॉक कुल रिकॉर्ड क्र पंजीयन क्रमांक नाम संभाग विद्यालय स्थिति असहयोग सहयोग";
+                  await clonedDocument.fonts.load(
+                    '400 10px "Noto Sans Devanagari"',
+                    sample,
+                  );
+                  await clonedDocument.fonts.ready;
+                },
+              },
+              jsPDF: {
+                unit: "mm",
+                format: "a4",
+                orientation: "portrait",
+              },
+              pagebreak: {
+                mode: ["css"],
+                before: ".pdf-page-next",
+                avoid: [".pdf-row"],
+              },
+            })
+            .from(report)
+            .save();
+        } catch (error) {
+          console.error("Error creating PDF:", error);
+          alert(
+            "PDF डाउनलोड नहीं हो सका। इंटरनेट कनेक्शन जाँचें और दोबारा प्रयास करें।",
+          );
+        } finally {
+          if (reportContainer && reportContainer.parentNode) {
+            reportContainer.parentNode.removeChild(reportContainer);
+          }
+          pdfBtn.innerHTML = originalButtonContent;
+          pdfBtn.disabled = false;
+        }
+      }
+
       function downloadCSV() {
         if (!currentFilteredData || currentFilteredData.length === 0) return;
 
@@ -2243,20 +2363,25 @@
           csvRows.push(dataRow.join(","));
         });
 
-        let csvString = csvRows.join("\r\n");
-        let blob = new Blob(["\uFEFF" + csvString], {
+        const csvString = csvRows.join("\r\n");
+        const blob = new Blob(["\uFEFF" + csvString], {
           type: "text/csv;charset=utf-8;",
         });
-        let url = URL.createObjectURL(blob);
-        let a = document.createElement("a");
-        a.href = url;
-        const blockName =
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        const districtName =
           document.getElementById("districtSelect").value || "Report";
-        a.download = `PMUMS_Report_${blockName}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        const safeDistrictName = districtName.replace(
+          /[\\/:*?"<>|]+/g,
+          "_",
+        );
+        link.download = `PMUMS_Report_${safeDistrictName}.csv`;
+        link.style.display = "none";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
       }
     </script>
   </body>
