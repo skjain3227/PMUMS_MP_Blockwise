@@ -2097,18 +2097,18 @@
 
           report = document.createElement("div");
           report.style.cssText =
-            "position:static;width:733px;padding:0;background:#fff;color:#0f172a;font-family:'Noto Sans Devanagari',sans-serif;font-weight:400;";
+            "position:static;width:700px;padding:0;background:#fff;color:#0f172a;font-family:'Noto Sans Devanagari',sans-serif;font-weight:400;";
           reportContainer.appendChild(report);
           document.body.appendChild(reportContainer);
 
           const columnWidths = [
             "5%",
-            "12%",
-            "16%",
+            "14%",
+            "17%",
             "9%",
             "9%",
             "10%",
-            "28%",
+            "25%",
             "11%",
           ];
           const headers = [
@@ -2160,7 +2160,7 @@
             page.className =
               pageNumber === 1 ? "pdf-page" : "pdf-page pdf-page-next";
             page.style.cssText =
-              "width:733px;box-sizing:border-box;background:#fff;color:#0f172a;font-family:'Noto Sans Devanagari',sans-serif;font-weight:400;" +
+              "width:700px;box-sizing:border-box;background:#fff;color:#0f172a;font-family:'Noto Sans Devanagari',sans-serif;font-weight:400;" +
               (pageNumber > 1
                 ? "break-before:page;page-break-before:always;"
                 : "");
